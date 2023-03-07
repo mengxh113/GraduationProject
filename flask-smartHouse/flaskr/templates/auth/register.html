@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+
+{% block title %}：注册{% endblock %}
+
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/index.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/auth/register.css') }}">
+{% endblock %}
+
+{% block function %}
+    <div id = 'register'>
+        <div class = 'funcTitle'>
+            <h2>注册</h2>
+        </div>
+        <form method = 'post' enctype = "multipart/form-data" name = 'register'>
+            <img title = '单击图片以设置头像' id = 'headshot' class = 'headshot' src = '../static/images/headshot/default.jpg' alt = '头像' onclick = "this.nextElementSibling.click();" onerror = "errorHeadshot(this)" onmouseover = "addHeadshot(this)" onmouseleave = "showHeadshot(this)">
+            <input type = 'file' name = "setHeadshot" id = 'setHeadshot' accept = 'image/*' style = "display: none;" onchange = "changeHeadshot(this)">
+            {% if not get_flashed_messages() %}
+                <div class = 'flash' id = 'tips'></div>
+            {% endif %}
+            {% for message in get_flashed_messages() %}
+                <div class = 'flash' id = 'tips'>{{ message }}</div>
+            {% endfor %}
+            <div class = 'inputBox'>
+                <label for = 'username'>用户名*:&nbsp;</label>
+                <input name = 'username' id = 'username' placeholder = "请输入用户名" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入用户名'" onchange = "check(this, 'username')" required>
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'password'>密码*:&nbsp;</label>
+                <input type = 'password' name = 'password' id = 'password' placeholder = "请输入密码" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入密码'" onchange = "check(this, 'password')" required>
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'confirm'>确认密码*:&nbsp;</label>
+                <input type = 'password' name = 'confirm' id = 'confirm' placeholder = "请再次输入密码" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请再次输入密码'" onchange = "check(this, 'confirm')" required>
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'phone'>手机号*:&nbsp;</label>
+                <input type = 'tel' name = 'phone' id = 'phone' placeholder = "请输入手机号" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入手机号'" onchange = "check(this, 'phone')" required>
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'code'>验证码*:&nbsp;</label>
+                <div class = 'codeBox' >
+                    <input name = 'code' id = 'code' placeholder = "请输入验证码" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入验证码'" onchange = "check(this, 'code')" required>&nbsp;
+                    <button id = 'getCode' onclick = "sendCode()">获取验证码</button>
+                </div>
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'email'>邮箱:&nbsp;</label>
+                <input type = 'email' name = 'email' id = 'email' placeholder = "请输入邮箱" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入邮箱'" onchange = "check(this, 'email')">
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'age'>年龄:&nbsp;</label>
+                <input type = 'number' min = '0' name = 'age' id = 'age' placeholder = "请输入年龄" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入年龄'" onchange = "check(this, 'age')">
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'sex'>性别:&nbsp;</label>
+                <div id = 'sexChoice'>
+                    <span>&nbsp;<input type = 'radio' name = 'sex' id = 'male' value = "男">男</span>
+                    <span>&nbsp;<input type = 'radio' name = 'sex' id = 'female' value = "女">女</span>
+                    <span>&nbsp;<input type = 'radio' name = 'sex' id = 'none' value = "私密" checked>私密</span>
+                </div>
+            </div>
+            <div name = 'button' class = 'registerButton'>
+                <input type = 'submit' value = "注册">
+            </div>
+        </form>
+    </div>
+    <script>
+        var dst = '';
+        function addHeadshot(e) {
+            e.src = '../static/images/headshot/default1.jpg';
+        }
+        function changeHeadshot() {
+            var headshot = document.getElementById('headshot');
+            var file = document.getElementById('setHeadshot').files[0];
+            var re = new FileReader();
+            re.readAsDataURL(file);
+            re.onload = function(re) {
+                dst = this.result;
+                headshot.getAttributeNode("src").value = '';
+                headshot.getAttributeNode("src").value = this.result;
+            }
+        }
+        function showHeadshot(e) {
+            if(dst == '') {
+                e.src = '../static/images/headshot/default.jpg';
+            }
+            else {
+                e.src = dst;
+            }
+        }
+        function errorHeadshot(e) {
+            e.src = '../static/images/headshot/default.jpg';
+        }
+    </script>
+{% endblock %}

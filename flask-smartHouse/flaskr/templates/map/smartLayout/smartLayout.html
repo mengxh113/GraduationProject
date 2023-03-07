@@ -1,0 +1,334 @@
+<!-- 智能布局展示区 -->
+{% extends 'base.html' %}
+
+{% block title %}：智能布局展示{% endblock %}
+{% block header %}<h3>智能布局展示</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/smartLayout/smartLayout.css') }}">
+	<link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'images/icon/iconfont/iconfont.css') }}"> 
+{% endblock %}
+
+{% block content %}
+    {% for message in get_flashed_messages() %}
+        <div class = 'flash' id = 'tips'>{{ message }}</div>
+    {% endfor %}
+	<div id = 'smartLayout'>
+		<div id = 'searchBox'>
+			<form id = 'searchKey' method = 'POST' action = "{{ url_for('map.smartLayout', filter = filter, key = key, func = func, style = style, width = width, height = height, demand = demand) }}">
+				<input id = 'key' name = 'key' value = '{{ key }}' placeholder = "请输入图片标题进行检索...">&nbsp;
+				<input name = 'func' value = '{{ func }}' style = "display: none;">
+                <input name = 'style' value = '{{ style }}' style = "display: none;">
+                <input name = 'width' value = '{{ width }}' style = "display: none;">
+                <input name = 'height' value = '{{ height }}' style = "display: none;">
+                <input name = 'demand' value = '{{ demand }}' style = "display: none;">
+				<input type = 'submit' value = '搜索'>
+			</form>
+			<div class = 'searchClass'>
+				<label id = 'func'>房间类型</label>
+				<div id = 'funcClass'>
+					{% for filter in filters['func'] %}
+						{% if filter == func %}
+							<a class = 'selected'  id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = filter, style = style, width = width, height = height, demand = demand) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = filter, style = style, width = width, height = height, demand = demand) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'style'>房间风格</label>
+				<div id = 'styleClass'>
+					{% for filter in filters['style'] %}
+						{% if filter == style %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = func, style = filter, width = width, height = height, demand = demand) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = func, style = filter, width = width, height = height, demand = demand) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'width'>房间宽度</label>
+				<div id = 'widthClass'>
+					{% for filter in filters['width'] %}
+						{% if filter == width %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = func, style = style, width = filter, height = height, demand = demand) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = func, style = style, width = filter, height = height, demand = demand) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'height'>房间长度</label>
+				<div id = 'heightClass'>
+					{% for filter in filters['height'] %}
+						{% if filter == height %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = func, style = style, width = width, height = filter, demand = demand) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = func, style = style, width = width, height = filter, demand = demand) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'demand'>一般需求</label>
+				<div id = 'demandClass'>
+					{% for filter in filters['demand'] %}
+						{% if filter == demand %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = func, style = style, width = width, height = height, demand = filter) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.smartLayout', filter = filter, key = key, func = func, style = style, width = width, height = height, demand = filter) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div id = 'templateBank'>
+			{% if g.user['status'] == 1 %}
+				<div class = 'templateBox'>
+					<a href = "{{ url_for('map.smartLayout_createTemplate') }}"><span>⊕</span>&nbsp;新建模板</a>
+				</div>
+			{% endif %}
+			{% for template in templates %}
+				<div class = 'templateBox'>
+					<div class = 'boxBody'>
+						<div class = 'boxBody_header'>
+							<span class = 'boxBody_title'>{{ template['title'] if template['title']|length <= 8 else template['title'][:8] + '...' }}</span>
+                            {% if g.user['status'] == 1 and template['id'] > 12 %}
+                                <a id = 'boxBody_close' class = 'iconfont icon-guanbixiao' href = "{{ url_for('map.delete', id = template['id'], func = 'template') }}"></a>
+                            {% endif %}
+						</div>
+                        <img title="点击进入详情页面" viewBox="0 0 200 200" onmouseover = "this.style = 'cursor: pointer';" onclick = "this.nextElementSibling.click();" src = "{{ url_for('static', filename = 'images/template/' + template['svg'] + '.svg') }}" alt = '模板图' style="display:block;width:330px;height:240px">
+                        <a href = "{{ url_for('map.templateShow', id = template['id']) }}" style = "display: none;"></a>
+						<div class = 'boxBody_sub'>
+							<div class = 'boxBody_style'>
+                                {% for sty in template['style'].split('&') %}
+                                    <span class = 'styleWords'>
+                                        {% if sty == 'Americano' %}
+                                            美式
+                                        {% elif sty == 'Arcadian' %}
+                                            田园式
+                                        {% elif sty == 'European' %}
+                                            欧式
+                                        {% elif sty == 'HongKong' %}
+                                            港式
+                                        {% elif sty == 'JaneEuropean' %}
+                                            简欧
+                                        {% elif sty == 'Japanese' %}
+                                            日式
+                                        {% elif sty == 'Mediterranean' %}
+                                            地中海式
+                                        {% elif sty == 'MildLuxury' %}
+                                            轻奢
+                                        {% elif sty == 'Modern' %}
+                                            现代
+                                        {% elif sty == 'NeoChinese' %}
+                                            新中式
+                                        {% elif sty == 'NorthernEuropean' %}
+                                            北欧
+                                        {% elif sty == 'Postmodern' %}
+                                            后现代
+                                        {% endif %}
+                                    </span>
+                                {% endfor %}
+                            </div>
+							<div style = 'display: none;' onclick = "like(this);" onmouseover = "nolike(this);" onmouseleave="nolike_after(this);" class = 'boxBody_like'>收藏<i class = 'iconfont icon-shoucang'></i></div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+        <div id = 'modelBank'>
+                <div id = 'modelBankMain'>
+                    <div id = 'modelTitle'>
+                        <label>智能搜索</label>
+                    </div>
+                    <form id = 'smartSearch' method = 'POST' action = "{{ url_for('map.smartLayout_searchTemplate') }}">
+                        <div class = 'smartBox'>
+                            <label for = 'func'>房间类型：</label>
+                            <select name = 'func' required>
+                                <option value = '客厅'>客厅</option>
+                                <option value = '厨房'>厨房</option>
+                                <option value = '卧室'>卧室</option>
+                                <option value = '卫生间'>卫生间</option>
+                            </select>
+                        </div>
+                        <div class = 'smartBox'>
+                            <label for = 'width'>房间宽度：</label>
+                            <input name = 'width' type = 'number' min = 0 max = 10 step = '0.1' required>&nbsp;m
+                        </div>
+                        <div class = 'smartBox'>
+                            <label for = 'height'>房间长度：</label>
+                            <input name = 'height' type = 'number' min = 0 max = 10 step = '0.1' required>&nbsp;m
+                        </div>
+                        <div class = 'smartBox'>
+                            <label for = 'locate'>门窗位置：</label>
+                            <select name = 'locate' required>
+                                <option value = '同侧'>同侧</option>
+                                <option value = '交叉'>交叉</option>
+                                <option value = '相对'>相对</option>
+                            </select>
+                        </div>
+                        <div class = 'smartBox'>
+                            <label for = 'demand'>一般需求：</label>
+                            <select name = 'demand'>
+                                <option value = '宽敞'>宽敞</option>
+                                <option value = '适中'>适中</option>
+                                <option value = '拥挤'>拥挤</option>
+                            </select>
+                        </div>
+                        <div class = 'smartBox'>
+                            <select name = 'near1'>
+                                <optgroup label = "硬装">
+                                    <option value = 'door'>门</option>
+                                    <option value = 'window'>窗</option>
+                                </optgroup>
+                                <optgroup label = '家具'>
+                                    <option value = 'sofa'>沙发</option>
+                                    <option value = 'bed'>床</option>
+                                    <option value = 'desk'>桌子</option>
+                                    <option value = 'chair'>椅子|凳子</option>
+                                    <option value = 'cabinetRack'>柜架</option>
+                                </optgroup>
+                                <optgroup label = '厨卫'>
+                                    <option value = 'cupboard'>橱柜</option>
+                                    <option value = 'bathroomCabinet'>浴室柜</option>
+                                    <option value = 'washStand'>洗手台</option>
+                                    <option value = 'toilet'>马桶</option>
+                                    <option value = 'bathtub'>浴缸</option>
+                                </optgroup>
+                            </select>
+                            与
+                            <select name = 'near2'>
+                                <optgroup label = "硬装">
+                                    <option value = 'door'>门</option>
+                                    <option value = 'window'>窗</option>
+                                </optgroup>
+                                <optgroup label = '家具'>
+                                    <option value = 'sofa'>沙发</option>
+                                    <option value = 'bed'>床</option>
+                                    <option value = 'desk'>桌子</option>
+                                    <option value = 'chair'>椅子|凳子</option>
+                                    <option value = 'cabinetRack'>柜架</option>
+                                </optgroup>
+                                <optgroup label = '厨卫'>
+                                    <option value = 'cupboard'>橱柜</option>
+                                    <option value = 'bathroomCabinet'>浴室柜</option>
+                                    <option value = 'washStand'>洗手台</option>
+                                    <option value = 'toilet'>马桶</option>
+                                    <option value = 'bathtub'>浴缸</option>
+                                </optgroup>
+                            </select>
+                            相近
+                        </div>
+                        <div id = 'searchButton'>
+                            <input type = 'submit' value = '搜索'>
+                        </div>
+                    </form>
+                </div>
+                <div id = 'modelBankNav'>
+                    <div id = 'sideNav' onclick = 'ChooseModel(this)' title = '展开搜索项' hide = 'true'>
+                        <i onclick = "" class = 'iconfont icon-xiala'></i>
+                        <label>智能搜索</label>
+                    </div>
+                </div>
+            </div>
+	</div>
+	<script>
+        window.onload = function() {
+            func_selected = document.getElementsByName('func')[0].value;
+            funcLabs = document.getElementById('funcClass').childNodes;
+			for(var i = 1; i < funcLabs.length; i = i + 2) {
+				if(funcLabs[i].id == func_selected) {
+                    funcLabs[i].setAttribute('class', 'selected');
+                }
+                else {
+                    funcLabs[i].setAttribute('class', 'unselected');
+                }
+			}
+            style_selected = document.getElementsByName('style')[0].value;
+            styleLabs = document.getElementById('styleClass').childNodes;
+			for(var i = 1; i < styleLabs.length; i = i + 2) {
+				if(styleLabs[i].id == style_selected) {
+                    styleLabs[i].setAttribute('class', 'selected');
+                }
+                else {
+                    styleLabs[i].setAttribute('class', 'unselected');
+                }
+			}
+            width_selected = document.getElementsByName('width')[0].value;
+            widthLabs = document.getElementById('widthClass').childNodes;
+			for(var i = 1; i < widthLabs.length; i = i + 2) {
+				if(widthLabs[i].id == width_selected) {
+                    widthLabs[i].setAttribute('class', 'selected');
+                }
+                else {
+                    widthLabs[i].setAttribute('class', 'unselected');
+                }
+			}
+            height_selected = document.getElementsByName('height')[0].value;
+            heightLabs = document.getElementById('heightClass').childNodes;
+			for(var i = 1; i < heightLabs.length; i = i + 2) {
+				if(heightLabs[i].id == height_selected) {
+                    heightLabs[i].setAttribute('class', 'selected');
+                }
+                else {
+                    heightLabs[i].setAttribute('class', 'unselected');
+                }
+			}
+            demand_selected = document.getElementsByName('demand')[0].value;
+            demandLabs = document.getElementById('demandClass').childNodes;
+			for(var i = 1; i < demandLabs.length; i = i + 2) {
+				if(demandLabs[i].id == demand_selected) {
+                    demandLabs[i].setAttribute('class', 'selected');
+                }
+                else {
+                    demandLabs[i].setAttribute('class', 'unselected');
+                }
+			}
+            var time = window.setInterval("flashHide()", 2000);
+        }
+        function flashHide() {
+            var flash = document.getElementById('tips');
+            if(flash != null)
+                flash.setAttribute('style', 'display: none');
+        }
+        function like(e) {
+            icon = e.childNodes[1];
+            if(icon.getAttribute('class') == 'iconfont icon-shoucang') {
+                e.innerHTML = "已收藏<i class = 'iconfont icon-shoucang1'></i>";
+            }
+            else {
+                e.innerHTML = "收藏<i class = 'iconfont icon-shoucang'></i>";
+            }
+        }
+        function nolike(e) {
+            console.log(e.childNodes[0]);
+            if(e.childNodes[1].getAttribute('class') == 'iconfont icon-shoucang1') {
+                e.innerHTML = "取消收藏<i class = 'iconfont icon-shoucang1'></i>";
+            }
+        }
+        function nolike_after(e) {
+            console.log(e.childNodes[0]);
+            if(e.childNodes[1].getAttribute('class') == 'iconfont icon-shoucang1') {
+                e.innerHTML = "已收藏<i class = 'iconfont icon-shoucang1'></i>";
+            }
+        }
+        //
+        function ChooseModel(e) {
+            if(e.getAttribute('hide') == 'true') {
+                div = document.getElementById('modelBank');
+                div.setAttribute('id', 'modelBank_show');
+                e.setAttribute('hide', false);
+                e.childNodes[1].style.transform = 'rotate(90deg)';
+            } else {
+                div = document.getElementById('modelBank_show');
+                div.setAttribute('id', 'modelBank');
+                e.setAttribute('hide', true);
+                e.childNodes[1].style.transform = 'rotate(-90deg)';
+            }
+        }
+    </script>
+{% endblock %}

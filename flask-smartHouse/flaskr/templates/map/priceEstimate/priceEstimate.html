@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block title %}：价格估算{% endblock %}
+{% block header %}<h3>价格估算</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/priceEstimate/priceEstimate.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id = 'priceEstimate'>
+        <div id = 'rough'>
+            <h2>粗略估价</h2>
+            <form id = 'roughPrice' action = "{{ url_for('map.priceEstimate', type = 'rough') }}" method = 'post'>
+                <div class = 'inputBox'>
+                    <label for = 'area'>房屋面积：</label>
+                    <input type = 'number' name = 'area' min = 0 max = 999 step = 0.01 required>
+                    <span>&nbsp;平方米(m²)</span>
+                </div>
+                <div class = 'inputBox'>
+                    <label for = 'location'>所在省市：</label>
+                    <label for = 'province'>省份(不含港澳台地区)：</label>
+                    <select name = 'province' id = 'provinceSelector' onchange = "setCitiesSelector(this)">
+                        <optgroup label = '请选择省份'>
+                            {% for province in provinces %}
+                                <option class = 'provinces' value = "{{ province['provinceid'] }}">{{ province['province'] }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                    <span>&nbsp;&nbsp;</span>
+                    <label for = 'city'>城市：</label>
+                    <select name = 'city' id = 'citySelector'>
+                        <optgroup label = '请选择城市'>
+                            <option class = 'cities' value = "110100" selected>北京市</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class = 'inputBox'>
+                    <label for = 'level'>装修品质：</label>
+                    <select name = 'level' required>
+                        <option value = '高品质'>高品质</option>
+                        <option value = '中等'>中等</option>s
+                        <option value = '简单'>简单</option>
+                    </select>
+                </div>
+                <input type = 'submit' value = '粗略估价'>
+            </form>
+        </div>
+        <div id = 'detailed'>
+            <h2>细致估价</h2>
+            <form id = 'detailedPrice' action = "{{ url_for('map.priceEstimate', type = 'detailed') }}" method = 'post'>
+                <div class = 'inputBox' style = 'display: none;'>
+                    <label for = 'area'>房屋面积：</label>
+                    <input type = 'number' name = 'area' min = 0 max = 999 step = 0.01 value = 0 required>
+                    <span>&nbsp;平方米(m²)</span>
+                </div>
+                <div class = 'inputBox' style = 'display: none;'>
+                    <label for = 'city'>城市：</label>
+                    <select name = 'city' id = 'citySelectorCopy'>
+                        <optgroup label = '请选择城市'>
+                            <option class = 'cities' value = "110100" selected>北京市</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class = 'inputBox' style = 'display: none;'>
+                    <label for = 'level'>装修品质：</label>
+                    <select name = 'level' required>
+                        <option value = '高品质' selected>高品质</option>
+                        <option value = '中等'>中等</option>s
+                        <option value = '简单'>简单</option>
+                    </select>
+                </div>
+                <div class = 'inputBox'>
+                    <label for = 'style'>装修风格：</label>
+                    <select name = 'style' required>
+                        <option value = '美式'>美式</option>
+                        <option value = '田园式'>田园式</option>s
+                        <option value = '欧式'>欧式</option>
+                        <option value = '港式'>港式</option>
+                        <option value = '简欧'>简欧</option>
+                        <option value = '日式'>日式</option>
+                        <option value = '地中海式'>地中海式</option>
+                        <option value = '轻奢'>轻奢</option>
+                        <option value = '现代'>现代</option>
+                        <option value = '新中式'>新中式</option>
+                        <option value = '北欧'>北欧</option>
+                        <option value = '后现代'>后现代</option>
+                    </select>
+                </div>
+                <div class = 'inputBox'>
+                    <label for = 'parlourArea'>客厅面积：</label>
+                    <input type = 'number' name = 'parlourArea' min = 0 max = 999 step = 0.01 required>
+                    <span>&nbsp;平方米(m²)</span>
+                </div>
+                <div class = 'inputBox'>
+                    <label for = 'kitchenArea'>厨房面积：</label>
+                    <input type = 'number' name = 'kitchenArea' min = 0 max = 999 step = 0.01 required>
+                    <span>&nbsp;平方米(m²)</span>
+                </div>
+                <div class = 'inputBox'>
+                    <label for = 'bedroomArea'>卧室面积：</label>
+                    <input type = 'number' name = 'bedroomArea' min = 0 max = 999 step = 0.01 required>
+                    <span>&nbsp;平方米(m²)</span>
+                </div>
+                <div class = 'inputBox'>
+                    <label for = 'bathroomArea'>卫生间面积：</label>
+                    <input type = 'number' name = 'bathroomArea' min = 0 max = 999 step = 0.01 required>
+                    <span>&nbsp;平方米(m²)</span>
+                </div>
+                <div class = 'inputBox'>
+                    <label for = 'woodenFloor'>木地板材质：</label>
+                    <select name = 'woodenFloor' required>
+                        <option value = '强化复合地板'>强化复合地板</option>
+                        <option value = '实木复合地板'>实木复合地板</option>
+                        <option value = '实木地板'>实木地板</option>
+                    </select>
+                </div>
+                <div class = 'inputBox'>
+                    <label for = 'door'>门材质：</label>
+                    <select name = 'door' required>
+                        <option value = '复合门'>复合门</option>
+                        <option value = '免漆门'>免漆门</option>
+                        <option value = '实木门'>实木门</option>
+                        <option value = '镁铝合金推拉门'>镁铝合金推拉门</option>
+                    </select>
+                    <span>&nbsp;*&nbsp;</span>
+                    <input type = 'number' min = 0 max = 10 name = 'doorNum' placeholder = '数量' required>
+                    <span>&nbsp;个</span>
+                </div>
+                <input type = 'submit' value = '细致估价'>
+            </form>
+        </div>
+        <div id = 'output'>
+            <span id = 'priceOutput'>{% if price == 0 %}此处显示估价结果{% else %}{{ price }}{% endif %}</span>
+            <!-- <span id = 'priceEqual'><a>【详情】</a></span> -->
+        </div>
+    </div>
+    <script>
+        formObj = document.getElementsByTagName('form');
+        areas = document.getElementsByName('area');
+        areas[0].onchange = function() {
+            areas[1].value = this.value;
+        }
+        cities = document.getElementsByName('city');
+        cities[0].onchange = function() {
+            cities[1].value = this.value;
+        }
+        levels = document.getElementsByName('level');
+        levels[0].onchange = function() {
+            levels[1].value = this.value;
+        }
+        formObj[1].onsubmit = function() {
+            if(document.getElementsByName('area')[1] == '') {
+                alert('请先输入面积！');
+                return false;
+            }
+            if(document.getElementsByName('city')[1] == '') {
+                alert('请先输入省市！');
+                return false;
+            }
+            if (document.getElementsByName('level')[1] == '') {
+                alert('请先输入装修品质！');
+                return false;
+            }
+            return true;
+        }
+        function setCitiesSelector(e) {
+            // cities = document.getElementById('cities').value;
+            cities = {{ cities|tojson }};
+            citySelector = document.getElementById('citySelector');
+            citySelector.childNodes[1].innerHTML = '';
+            for(var i = 0;i < cities.length;i++) {
+                if(cities[i]['provinceid'] == e.value) {
+                    var option = document.createElement('option');
+                    option.setAttribute('class', 'cities');
+                    option.setAttribute('value', cities[i]['cityid']);
+                    option.innerHTML = '';
+                    option.innerHTML = cities[i]['city'];
+                    citySelector.childNodes[1].appendChild(option);
+                }
+            }
+            citySelectorCopy = document.getElementById('citySelectorCopy');
+            citySelectorCopy.childNodes[1].innerHTML = '';
+            for(var i = 0;i < cities.length;i++) {
+                if(cities[i]['provinceid'] == e.value) {
+                    var option = document.createElement('option');
+                    option.setAttribute('class', 'cities');
+                    option.setAttribute('value', cities[i]['cityid']);
+                    option.innerHTML = '';
+                    option.innerHTML = cities[i]['city'];
+                    citySelectorCopy.childNodes[1].appendChild(option);
+                }
+            }
+        }
+    </script>
+{% endblock %}

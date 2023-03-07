@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+{% block title %}：登录{% endblock %}
+
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/index.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/auth/login.css') }}">
+{% endblock %}
+
+{% block function %}
+    <div id = 'login'>
+        <div class = 'funcTitle'>
+            <h2>登录</h2>
+        </div>
+        <form method = 'post' name = 'login'>
+            <img class = 'headshot' src = '../static/images/headshot/default.jpg' alt = '未登录'>
+            {% if not get_flashed_messages() %}
+                <div class = 'flash' id = 'tips'></div>
+            {% endif %}
+            {% for message in get_flashed_messages() %}
+                <div class = 'flash' id = 'tips'>{{ message }}</div>
+            {% endfor %}
+            <div class = 'inputBox'>
+                <label for = 'account'>账号:&nbsp;</label>
+                <input name = 'account' id = 'account' placeholder = "请输入用户名或手机号" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入用户名或手机号'" onchange = "check(this, 'account')" required>
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'password'>密码:&nbsp;</label>
+                <input type = 'password' name = 'password' id = 'password' placeholder = "请输入密码" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入密码'" onchange = "check(this, 'password')" required>
+            </div>
+            <div name = 'button' class = 'loginButton'>
+                <input type = 'submit' value = "登录">
+            </div>
+            <div class = 'others'>
+                <a href = "{{ url_for('auth.register') }}">尚未注册？</a>
+                <a href = "{{ url_for('auth.reset') }}">忘记密码？</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

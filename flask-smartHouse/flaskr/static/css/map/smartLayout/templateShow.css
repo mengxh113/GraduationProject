@@ -1,0 +1,48 @@
+@charset "UTF-8";
+#template_body {
+    display: flex;
+    justify-content: space-evenly;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(white, rgb(225, 225, 225));
+}
+#template_img {
+    display: flex;
+    min-width: 350px;
+    max-width: 560px;
+}
+#template_info {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+#template_title {
+    display: flex;
+    height: 70px;
+    align-items: center;
+    justify-content: center;
+}
+.template_box {
+    display: flex;
+    padding-left: 20px;
+    width: 100%;
+    font-size: 18px;
+    line-height: 1.8;
+}
+.template_value {
+    margin-top: 2px;
+    font-family: 'kaiti';
+    font-weight: bolder;
+    color: rgb(46, 123, 248);
+}
+#template_scaleRange {
+    display: flex;
+    padding-left: 20px;
+    width: 100%;
+    font-size: 18px;
+    line-height: 1.8;
+    flex-direction: column;
+}
+#template_scaleRange>.template_value {
+    font-size: 14px;
+}

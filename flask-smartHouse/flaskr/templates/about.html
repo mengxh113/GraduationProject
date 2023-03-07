@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}：关于我们{% endblock %}
+{% block header %}<h3>关于我们</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id = 'about'>
+        <table id = 'myInfo'>
+            <tr>
+                <td class = 'row1'>
+                    学生姓名
+                </td>
+                <td class = 'row2'>
+                    孟祥辉
+                </td>
+            </tr>
+            <tr>
+                <td class = 'row1'>
+                    学生学号
+                </td>
+                <td class = 'row2'>
+                    183406040313
+                </td>
+            </tr>
+            <tr>
+                <td class = 'row1'>
+                    联系方式
+                </td>
+                <td class = 'row2'>
+                    18655983159
+                </td>
+            </tr>
+            <tr>
+                <td class = 'row1'>
+                    指导教师
+                </td>
+                <td class = 'row2'>
+                    刘翠微
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

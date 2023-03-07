@@ -1,0 +1,260 @@
+@charset "UTF-8";
+.content {
+    flex-direction: column;
+}
+#article {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 90%;
+    height: 100%;
+    background: linear-gradient(white, rgb(225, 225, 225));
+}
+#searchBox {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 8%;
+    background-color: rgb(205, 227, 241);
+}
+#searchKey {
+    display: flex;
+}
+#searchKey>input {
+    text-indent: 6px;
+    padding: 2px;
+    display: flex;
+    width: 300px;
+}
+#searchKey>input[type = 'submit'] {
+    display: flex;
+    width: 50px;
+    text-align: center;
+    background-color: #5ed4f8;
+}
+#searchKey>input[type = 'submit']:hover {
+    background-color: #95e4fc;
+    cursor: pointer;
+}
+#searchClass {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+#theme {
+    display: flex;
+    justify-content: center;
+    width: 12.5%;
+    background-color: #e8e8ff;
+}
+#themeClass {
+    display: flex;
+    width: 87.5%;
+    flex-direction: row;
+}
+#themeClass>a {
+    display: flex;
+    justify-content: center;
+    width: 14.28%;
+    align-items: space-evenly;
+}
+.unselected {
+    color: black;
+    background-color: rgb(169, 216, 245);
+}
+.unselected:hover {
+    color: black;
+    background-color: rgb(185, 222, 245);
+}
+.selected {
+    color: white;
+    background-color: rgb(117, 194, 241);
+}
+#articleBank {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    border-collapse: collapse;
+    width: 95%;
+    height: 85%;
+    max-height: 538.5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#articleBank::-webkit-scrollbar {
+    height: 10px;
+    width: 7px;
+    background: rgba(0, 0, 0, 0.1);
+}
+#articleBank::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
+}
+.articleBox {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-collapse: collapse;
+    justify-content: center;
+    box-shadow: darkgrey 1px 1px 1px 1px;
+    background-color: rgb(245, 243, 222);
+    margin: 3px;
+    width: 318px;
+    height: 80px;
+}
+.articleBox>a {
+    display: flex;
+    height: 30px;
+    width: 100px;
+    align-self: center;
+    font-size: 18px;
+}
+.articleBox>a>span {
+    height: 20px;
+}
+.articleBox>.boxBody>.boxBody_header {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    height: 35px;
+    justify-content: space-around;
+    align-items: center;
+}
+.articleBox>.boxBody>.boxBody_header>i {
+    display: flex;
+    position: absolute;
+    margin-left: 140px;
+    margin-top: 26px;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.articleBox>.boxBody>.boxBody_header>i:hover {
+    background-color: rgb(248, 237, 176);
+}
+.boxBody_title {
+    font-family: 'STXinwei';
+    font-size: 20px;
+    font-weight: bold;
+}
+.boxBody_author {
+    font-family: 'STKaiti';
+}
+.articleBox>.boxBody>.boxBody_info {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    align-items: center;
+    justify-content: space-around;
+}
+.boxBody_theme_theme1 {
+    /* 法律法规 */
+    color: red;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme2 {
+    /* 装修风格 */
+    color: blue;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme3 {
+    /* 家具建材 */
+    color: rgb(211, 211, 52);
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme4 {
+    /* 价格估算 */
+    color: gold;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme5 {
+    /* 经验分享 */
+    color: #5ed4f8;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme6 {
+    /* 健康家居 */
+    color: green;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_time {
+    font-size: 14px;
+    font-family: 'STLiti';
+    font-weight: bold;
+}
+.articleBox>.footerA {
+    display: flex;
+    height: 25px;
+    flex-direction: row;
+}
+.articleBox>.footerA>a[class = 'edi'] {
+    display: flex;
+    height: 100%;
+    width: 50%;
+    outline: 0.5px solid black;
+    font-weight: bolder;
+    justify-content: center;
+}
+.articleBox>.footerA>a[class = 'edi']:hover {
+    color: white;
+    background-color: rgb(0, 0, 255);
+}
+.articleBox>.footerA>a[class = 'del'] {
+    display: flex;
+    height: 100%;
+    width: 50%;
+    outline: 0.5px solid black;
+    font-weight: bolder;
+    justify-content: center;
+}
+.articleBox>.footerA>a[class = 'del']:hover {
+    color: white;
+    background-color: rgb(255, 0, 0);
+}
+.articleBox>.footerB {
+    display: flex;
+    height: 25px;
+    flex-direction: row;
+}
+.articleBox>.footerB>a[class = 'edi'] {
+    display: flex;
+    height: 100%;
+    width: 50%;
+    outline: 0.5px solid black;
+    color: grey;
+    font-weight: bolder;
+    justify-content: center;
+}
+.articleBox>.footerB>a[class = 'del'] {
+    display: flex;
+    height: 100%;
+    width: 50%;
+    outline: 0.5px solid black;
+    color: grey;
+    font-weight: bolder;
+    justify-content: center;
+}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}：装修风格效果图展示{% endblock %}
+{% block header %}<h3>装修风格效果图展示</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/styleDisplay/styleShow.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id = 'style_body'>
+        <img id = 'style_img' src = "{{ url_for('static', filename = 'images/buildStyle/' + style['style'].split('&')[0] + '/' + style['id']|string + '.' + style['filetype']) }}" alt = '效果图'>
+        <div id = 'style_info'>
+            <h2 id = 'style_title'>{{ style['title'] }}</h2>
+            <div id = 'style_type' class = 'style_box'>
+                <div class = 'style_label'>房间类别：</div>
+                <div class = 'style_value'>{{ style['type'] }}</div>
+            </div>
+            <div id = 'style_func' class = 'style_box'>
+                <div class = 'style_label'>功能分区：</div>
+                <div class = 'style_value'>{{ style['func'] }}</div>
+            </div>
+            <div id = 'style_area' class = 'style_box'>
+                <div class = 'style_label'>房间面积：</div>
+                <div class = 'style_value'>{{ style['area'] }}m²</div>
+            </div>
+            <div id = 'style_style' class = 'style_box'>
+                <div class = 'style_label'>装修风格：</div>
+                <div class = 'style_value'>
+                    {% for sty in style['style'].split('&') %}
+                        <span class = 'styleWords'>
+                            {% if sty == 'Americano' %}
+                                美式
+                            {% elif sty == 'Arcadian' %}
+                                田园式
+                            {% elif sty == 'European' %}
+                                欧式
+                            {% elif sty == 'HongKong' %}
+                                港式
+                            {% elif sty == 'JaneEuropean' %}
+                                简欧
+                            {% elif sty == 'Japanese' %}
+                                日式
+                            {% elif sty == 'Mediterranean' %}
+                                地中海式
+                            {% elif sty == 'MildLuxury' %}
+                                轻奢
+                            {% elif sty == 'Modern' %}
+                                现代
+                            {% elif sty == 'NeoChinese' %}
+                                新中式
+                            {% elif sty == 'NorthernEuropean' %}
+                                北欧
+                            {% elif sty == 'Postmodern' %}
+                                后现代
+                            {% endif %}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,102 @@
+<!-- 文章展示区 -->
+{% extends 'base.html' %}
+
+{% block title %}：文章库{% endblock %}
+{% block header %}<h3>文章库</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/article/article.css') }}">
+	<link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'images/icon/iconfont/iconfont.css') }}"> 
+{% endblock %}
+
+{% block content %}
+	<div id = 'article'>
+		<div id = 'searchBox'>
+			<form id = 'searchKey' method = 'POST'>
+				<input id = 'key' name = 'key' value = '{{ key }}' placeholder = "请输入文章标题进行检索...">&nbsp;
+				<input name = 'theme' value = '{{ selected }}' style = "display: none;">
+				<input type = 'submit' value = '搜索'>
+			</form>
+			<div id = 'searchClass'>
+				<label id = 'theme'>主题</label>
+				<div id = 'themeClass'>
+					{% for filter in article_filters %}
+						{% if filter == selected %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.article', filter = filter, key = key, selected = filter) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.article', filter = filter, key = key, selected = filter) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div id = 'articleBank'>
+			{% if g.user['status'] == 1 %}
+				<div class = 'articleBox'>
+					<a id = 'newOne' href = "{{ url_for('map.articleCreate') }}"><span>⊕</span>&nbsp;新增文章</a>
+				</div>
+			{% endif %}
+			{% for article in articles %}
+				<div class = 'articleBox'>
+					<div class = 'boxBody'>
+						<div class = 'boxBody_header'>
+							<a title = '详情' class = 'boxBody_title' href = "{{ url_for('map.articleShow', id = article['id']) }}">{{ article['title'] if article['title']|length <= 10 else article['title'][:10] + '...' }}</a>
+							<div class = 'boxBody_author'><i class = "iconfont icon-zuozhe"></i>&nbsp;{{ article['username'] if article['username']|length <= 3 else article['username'][:3] + '...' }}</div>
+						</div>
+						<div class = 'boxBody_info'>
+							<div class = 'boxBody_theme'></i>{{ article['theme'] }}</div>
+							<div class = 'boxBody_time'>{{ article['creation_time'].strftime('%Y/%m/%d') }}</div>
+						</div>
+					</div>
+					{% if article['username'] == g.user['username'] %}
+						<div class = 'footerA'>
+							<a class = 'edi' href = "{{ url_for('map.edit', id = article['id']) }}">编辑</a>
+							<a class = 'del' href = "{{ url_for('map.delete', id = article['id'], type = 'article') }}">删除</a>
+						</div>
+					{% elif g.user['status'] == 1 %}
+						<div class = 'footerB'>
+							<a class = 'edi' href = '#'>编辑</a><a class = 'del' href = '#'>删除</a>
+						</div>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<script>
+		window.onload = function() {
+			themeLabs = document.getElementsByClassName('boxBody_info');
+			for(var i = 0; i < themeLabs.length; i++) {
+				switch(themeLabs[i].childNodes[1].innerHTML) {
+					case '法律法规': 
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme1');
+						break;
+					case '装修风格': 
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme2');
+						break;
+					case '家具建材':  
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme3');
+						break;
+					case '价格估算':  
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme4');
+						break;
+					case '经验分享':  
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme5');
+						break;
+					case '健康家居':  
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme6');
+						break;
+				}
+			}
+		}
+		function like(e) {
+			if(e.getAttribute('class') == 'iconfont icon-shoucang') {
+				e.setAttribute('class', 'iconfont icon-shoucang1');
+				e.setAttribute('title', '已收藏');
+			}
+			else {
+				e.setAttribute('class', 'iconfont icon-shoucang');
+				e.setAttribute('title', '收藏');
+			}
+		}
+	</script>
+{% endblock %}

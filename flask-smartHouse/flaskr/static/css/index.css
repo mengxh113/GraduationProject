@@ -1,0 +1,178 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+}
+#styleShow {
+    display: flex;
+    width: 75%;
+    height: 100%;
+    border-right: 1px solid;
+}
+.function {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+}
+.funcTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15%;
+    background: skyblue;
+}
+.funcTitle>h2 {
+    color: blue;
+}
+#BJ{            /*图片居中 */
+    width: 100%;
+    height: 633.6px;
+    text-align: center;     
+}
+#img{           /*图片宽度，高度 */
+   width: 1151.25px;
+   height: 633.6px;
+   max-width: 100%;
+   max-height: 100%;
+   overflow-x: hidden;
+}
+#ol{
+    display: flex;
+    flex-direction: row;
+   position: absolute;    /* 绝对定位 */
+   bottom: 30px;       /* 高度 */
+   width: 75%;        /* 宽度 */
+   justify-content: center;
+}
+#ol>li {
+    display: flex;
+    margin: 5px;
+    width: 12px;
+    height: 12px;
+}
+#ol>li>img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+}
+#ol>li:hover {
+    cursor: pointer;
+    filter: brightness(80%);
+}
+#article {
+    height: 100%;
+}
+#searchBox {
+    display: flex;
+    height: 5%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(245, 252, 210);
+}
+#searchBox>a {
+    display: flex;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(191, 191, 179);
+    margin-right: 15px;
+    cursor: pointer;
+}
+#searchBox>input {
+    text-indent: 10px;
+    width: 200px;
+}
+#searchBox>input[type = 'submit'] {
+    text-indent: 0px;
+    text-align: center;
+    width: 40px;
+}
+#articleBank {
+    height: 95%;
+    max-height: 95%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.boxBody {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-collapse: collapse;
+    justify-content: center;
+    background-color: rgb(245, 243, 222);
+    width: 100%;
+    height: 14%;
+}
+.boxBody>i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.boxBody>.boxBody_header {
+    display: flex;
+    flex-direction: row;
+    height: 70%;
+    justify-content: space-around;
+    align-items: center;
+}
+.boxBody_title {
+    font-family: 'STXinwei';
+    font-size: 20px;
+    font-weight: bold;
+}
+.boxBody_author {
+    font-family: 'STKaiti';
+}
+.boxBody>.boxBody_info {
+    display: flex;
+    flex-direction: row;
+    height: 30%;
+    align-items: center;
+    justify-content: space-around;
+}
+.boxBody_theme_theme1 {
+    /* 法律法规 */
+    color: red;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme2 {
+    /* 装修风格 */
+    color: blue;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme3 {
+    /* 家具建材 */
+    color: rgb(211, 211, 52);
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme4 {
+    /* 价格估算 */
+    color: gold;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme5 {
+    /* 经验分享 */
+    color: #5ed4f8;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_theme_theme6 {
+    /* 健康家居 */
+    color: green;
+    font-size: 14px;
+    font-family: 'STXingkai';
+    font-weight: 500;
+}
+.boxBody_time {
+    font-size: 14px;
+    font-family: 'STLiti';
+    font-weight: bold;
+}

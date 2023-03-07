@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}：智能布局模板图展示{% endblock %}
+{% block header %}<h3>智能布局模板图展示</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/smartLayout/templateShow.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id = 'template_body'>
+        <img id = 'template_img' src = "{{ url_for('static', filename = 'images/template/' + template['svg'] + '.svg') }}" alt = '模板图'>
+        <div id = 'template_info'>
+            <h2 id = 'template_title'>{{ template['title'] }}</h2>
+            <div id = 'template_func' class = 'template_box'>
+                <div class = 'template_label'>房间类型：</div>
+                <div class = 'template_value'>{{ template['func'] }}</div>
+            </div>
+            <div id = 'template_width' class = 'template_box'>
+                <div class = 'template_label'>房间宽度：</div>
+                <div class = 'template_value'>{{ template['width'] }}</div>
+            </div>
+            <div id = 'template_height' class = 'template_box'>
+                <div class = 'template_label'>房间长度：</div>
+                <div class = 'template_value'>{{ template['height'] }}</div>
+            </div>
+            <div id = 'template_floor' class = 'template_box'>
+                <div class = 'template_label'>地板材质：</div>
+                <div class = 'template_value'>{{ template['floor'] }}</div>
+            </div>
+            <div id = 'template_style' class = 'template_box'>
+                <div class = 'template_label'>房间风格：</div>
+                <div class = 'template_value'>
+                    {% for sty in template['style'].split('&') %}
+                        <span class = 'styleWords'>
+                            {% if sty == 'Americano' %}
+                                美式
+                            {% elif sty == 'Arcadian' %}
+                                田园式
+                            {% elif sty == 'European' %}
+                                欧式
+                            {% elif sty == 'HongKong' %}
+                                港式
+                            {% elif sty == 'JaneEuropean' %}
+                                简欧
+                            {% elif sty == 'Japanese' %}
+                                日式
+                            {% elif sty == 'Mediterranean' %}
+                                地中海式
+                            {% elif sty == 'MildLuxury' %}
+                                轻奢
+                            {% elif sty == 'Modern' %}
+                                现代
+                            {% elif sty == 'NeoChinese' %}
+                                新中式
+                            {% elif sty == 'NorthernEuropean' %}
+                                北欧
+                            {% elif sty == 'Postmodern' %}
+                                后现代
+                            {% endif %}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id = 'template_remark' class = 'template_box'>
+                <div class = 'template_label'>模板描述：</div>
+                <div class = 'template_value'>{{ template['remark'] }}</div>
+            </div>
+            <div id = 'template_locate' class = 'template_box'>
+                <div class = 'template_label'>门窗位置：</div>
+                <div class = 'template_value'>{{ template['locate'] }}</div>
+            </div>
+            <div id = 'template_demand' class = 'template_box'>
+                <div class = 'template_label'>一般需求：</div>
+                <div class = 'template_value'>{{ template['demand'] }}</div>
+            </div>
+            <div id = 'template_scaleRange' class = 'template_box'>
+                <div class = 'template_label'>家具尺寸：</div>
+                {% for i in template['scaleRange'].split(';') %}
+                    <div class = 'template_value'>{{ i }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

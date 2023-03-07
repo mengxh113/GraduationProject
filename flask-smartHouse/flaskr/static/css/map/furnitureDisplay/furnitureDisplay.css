@@ -1,0 +1,386 @@
+@charset "UTF-8";
+.content {
+    flex-direction: column;
+}
+#furnitureDisplay {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 95%;
+    height: 100%;
+    background: linear-gradient(white, rgb(225, 225, 225));
+}
+#searchBox {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 25%;
+    background-color: rgb(205, 227, 241);
+}
+#searchKey {
+    display: flex;
+}
+#searchKey>input {
+    text-indent: 6px;
+    padding: 2px;
+    display: flex;
+    width: 300px;
+}
+#searchKey>input[type = 'submit'] {
+    display: flex;
+    width: 50px;
+    text-align: center;
+    background-color: #5ed4f8;
+}
+#searchKey>input[type = 'submit']:hover {
+    background-color: #95e4fc;
+    cursor: pointer;
+}
+.searchClass {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+#model, #color, #material, #style {
+    display: flex;
+    justify-content: center;
+    width: 12.5%;
+    background-color: #e8e8ff;
+}
+#modelClass, #colorClass, #materialClass, #styleClass {
+    display: flex;
+    width: 87.5%;
+    flex-direction: row;
+}
+#modelClass>a, #modelClass>li {
+    display: flex;
+    justify-content: center;
+    width: 25%;
+    align-items: space-evenly;
+}
+#colorClass>a {
+    display: flex;
+    justify-content: center;
+    width: 14.28%;
+    align-items: space-evenly;
+}
+#materialClass>a {
+    display: flex;
+    justify-content: center;
+    width: 12.5%;
+    align-items: space-evenly;
+}
+#styleClass>a {
+    display: flex;
+    justify-content: center;
+    width: 7.69%;
+    align-items: space-evenly;
+}
+.models>i:hover {
+    cursor: pointer;
+}
+.model_unselected {
+    color: black;
+    background-color: rgb(216, 239, 253);
+}
+.model_unselected:hover {
+    color: black;
+    background-color: rgb(195, 226, 246);
+}
+.model_selected {
+    color: white;
+    background-color: rgb(117, 194, 241);
+}
+.unselected, .models {
+    color: black;
+    background-color: rgb(169, 216, 245);
+}
+.unselected:hover, .models:hover {
+    color: black;
+    background-color: rgb(185, 222, 245);
+}
+.selected {
+    color: white;
+    background-color: rgb(117, 194, 241);
+}
+.modelMenu {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    
+}
+li {
+    width: 255.35px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+li>a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+#furnitureImageBank {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    border-collapse: collapse;
+    width: 98%;
+    height: 75%;
+    max-height: 538.5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#furnitureImageBank::-webkit-scrollbar {
+    height: 10px;
+    width: 7px;
+    background: rgba(0, 0, 0, 0.1);
+}
+#furnitureImageBank::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
+}
+.furnitureBox {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-collapse: collapse;
+    justify-content: center;
+    box-shadow: darkgrey 1px 1px 1px 1px;
+    background-color: rgb(165, 216, 236);
+    margin: 3px;
+    width: 272.55px;
+    height: 214.28px;
+}
+.furnitureBox>a {
+    display: flex;
+    height: 30px;
+    width: 100px;
+    align-self: center;
+    font-size: 18px;
+}
+.furnitureBox>a:hover {
+    cursor: pointer;
+}
+#uploadImageBox {
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    width: 397px;
+    height: 325px;
+    background-color: white;
+    z-index: 3;
+}
+#uploadImageBox_header {
+    display: flex;
+    max-height: 60px;
+    width: 367px;
+    padding: 15px;
+    font-size: large;
+    font-weight: bold;
+    background-color: rgb(192, 192, 192);
+    cursor: move;
+}
+#uploadImageBox_header>span, #uploadImageBox_header>i {
+    height: 25px;
+}
+#uploadImageBox_header>i {
+    display: flex;
+    position: absolute;
+    margin-left: 352px;
+    margin-top: -15px;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    cursor: auto;
+}
+#uploadImageBox_header>i:hover {
+    background-color: rgb(223, 204, 204);
+}
+#uploadImageBox_content {
+    display: flex;
+    flex-direction: column;
+    width: 357px;
+    padding: 20px;
+}
+.uploadImageBox_inputBox {
+    display: flex;
+    height: 30px;
+    margin: 5px 0 5px;
+    align-items: space-evenly;
+}
+.uploadImageBox_inputBox>label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 7px;
+    width: 50px;
+}
+#uploadImageBox_title, #uploadImageBox_image, #uploadImageBox_style, #uploadImageBox_price {
+    margin-left: 0px;
+}
+#uploadImageBox_unit {
+    margin-left: 0px;
+    width: 40px;
+}
+.uploadImageBox_inputBox>select[name = 'model'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+}
+.uploadImageBox_styleChoice_hide {
+    display: none;
+}
+.uploadImageBox_styleChoice_show {
+    position: absolute;
+    margin-left: -4px;
+    margin-top: -52px;
+    border-collapse: collapse;
+    opacity: 1;
+    background-color: #e3f8ff;
+}
+table, tr, td {
+    border: 1px solid black;
+}
+td {
+    padding: 2px;
+    height: 20px;
+}
+.uploadImageBox_inputBox>input {
+    display: flex;
+    width: 292px;
+    text-indent: 8px;
+    height: 26px;
+}
+.uploadImageBox_inputBox>input[name = 'size'] {
+    width: 101px;
+}
+.uploadImageBox_inputBox>input[type = 'number'] {
+    width: 50px;
+    text-indent: 0px;
+}
+.uploadImageBox_inputBox>input[type = 'file'] {
+    display: flex;
+    width: 170px;
+    padding: 2.8px;
+    height: 24.4px;
+}
+.uploadImageBox_inputBox>input[type = 'file']:focus {
+    outline: none;
+}
+.uploadImageBox_inputBox>select, #styleFolder {
+    display: flex;
+    height: 30px;
+}
+#styleFolder {
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 70px;
+}
+#uploadImageBox_footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 30px;
+    margin: 15px -12px;
+}
+#uploadImageBox_footer>input, #uploadImageBox_footer>button {
+    height: 100%;
+    margin-left: 25px;
+    width: 100px;
+}
+.furnitureBox>.boxBody {
+    display: flex;
+    position: relative;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.furnitureBox>.boxBody>.boxBody_header {
+    display: flex;
+    height: 15%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.boxBody_title {
+    display: flex;
+    font-family: 'STXinwei';
+    font-size: 20px;
+    font-weight: bold;
+}
+#boxBody_close {
+    display: flex;
+    position: absolute;
+    margin-left: 122px;
+    margin-top: -1px;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    cursor: auto;
+}
+#boxBody_close:hover {
+    background-color: rgb(144, 194, 247);
+}
+.furnitureBox>.boxBody>img {
+    display: flex;
+    height: 70%;
+    width: 100%;
+}
+.boxBody_sub {
+    display: flex;
+    height: 15%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.boxBody_sub>.boxBody_style {
+    display: flex;
+    width: 65%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.boxBody_sub>.boxBody_like {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+}
+.boxBody_sub>.boxBody_like:hover {
+    cursor: pointer;
+    color: red;
+}
+.boxBody_sub>.boxBody_like>i:hover {
+    cursor: pointer;
+    background-color: rgb(147, 238, 254);
+}
+.hide {
+    position: absolute;
+    width: 1536px;
+    height: 633.6px;
+    z-index: -1;
+}
+.show {
+    position: absolute;
+    width: 1536px;
+    height: 633.6px;
+    z-index: 3;
+}

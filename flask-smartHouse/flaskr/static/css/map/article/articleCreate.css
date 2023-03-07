@@ -1,0 +1,51 @@
+@charset "UTF-8";
+#article-header {
+    width: 1285px;
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+}
+#article-header>label {
+    color: rgb(82, 82, 82);
+    font-weight: bold;
+}
+#article-header>input {
+    text-indent: 12px;
+    height: 30px;
+    width: 390px;
+}
+#article-title {
+   height: 26px !important;
+}
+#article-theme {
+    height: 30px;
+    border: 1px solid;
+}
+#confirmButton {
+    height: 30px;
+    width: 80px;
+    border: 1px solid black;
+    color: white;
+    border-radius: 10px;
+    background-color: rgb(13, 166, 226);
+}
+#confirmButton:hover {
+    cursor: pointer;
+    background-color: rgb(89, 196, 238);
+}
+#article-content {
+    z-index: 1 !important;
+}
+#content {
+    display: none;
+}
+.editormd-dialog-container {
+   display: flex !important;
+   flex-direction: column !important;
+}
+.editormd-image-inputBox {
+    display: flex !important;
+}
+.editormd-image-inputBox>input {
+    height: 34px !important;
+}

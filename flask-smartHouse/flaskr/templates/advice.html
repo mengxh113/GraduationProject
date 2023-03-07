@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}：反馈建议{% endblock %}
+{% block header %}<h3>反馈建议</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/advice.css') }}">
+{% endblock %}
+
+{% block content %}
+    <form id = 'advice' method = "post" onsubmit = "alert('提交成功！');">
+        <label for = "content">反馈建议*：</label>
+		<textarea name = "content" id = "content" placeholder = "请给出您的问题反馈或者宝贵建议" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请给出您的问题反馈或者宝贵建议'" required></textarea><br>
+        <label for = "contactWay">联系方式：</label>
+		<input name = "contactWay" id = "contactWay" placeholder = "请留下您的联系方式" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请留下您的联系方式'"><br>
+        <input id = "adviceButton" type = 'submit' value = "提交">
+    </form>
+{% endblock %}

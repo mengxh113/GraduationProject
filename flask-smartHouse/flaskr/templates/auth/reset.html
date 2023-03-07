@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+{% block title %}：重置密码{% endblock %}
+
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/index.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/auth/reset.css') }}">
+{% endblock %}
+
+{% block function %}
+    <div id = 'reset'>
+        <div class = 'funcTitle'>
+            <h2>重置密码</h2>
+        </div>
+        <form method = 'post' name = 'reset'>
+            {% if not get_flashed_messages() %}
+                <div class = 'flash' id = 'tips'></div>
+            {% endif %}
+            {% for message in get_flashed_messages() %}
+                <div class = 'flash' id = 'tips'>{{ message }}</div>
+            {% endfor %}
+            <div class = 'inputBox'>
+                <label for = 'account'>账号*:&nbsp;</label>
+                <input name = 'account' id = 'account' placeholder = "请输入用户名或手机号" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入用户名或手机号'" onchange = "check(this, 'account')" required>
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'password'>新密码*:&nbsp;</label>
+                <input type = 'password' name = 'password' id = 'password' placeholder = "请输入新密码" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入新密码'" onchange = "check(this, 'password')" required>
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'confirm'>确认密码*:&nbsp;</label>
+                <input type = 'password' name = 'confirm' id = 'confirm' placeholder = "请再次输入密码" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请再次输入密码'" onchange = "check(this, 'confirm')" required>
+            </div>
+            <div class = 'inputBox'>
+                <label for = 'code'>验证码*:&nbsp;</label>
+                <div class = 'codeBox' >
+                    <input name = 'code' id = 'code' placeholder = "请输入验证码" onfocus = "this.placeholder = ''" onblur = "this.placeholder = '请输入验证码'" onchange = "check(this, 'code')" required>&nbsp;
+                    <button id = 'getCode' onclick = "sendCode()">获取验证码</button>
+                </div>
+            </div>
+            <div name = 'button' class = 'resetButton'>
+                <input type = 'submit' value = "重置密码">
+            </div>
+        </form>
+    </div>
+{% endblock %}

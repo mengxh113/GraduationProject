@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}：建材家具效模型图展示{% endblock %}
+{% block header %}<h3>建材家具模型图展示</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/furnitureDisplay/furnitureShow.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id = 'furniture_body'>
+        <img id = 'furniture_img' src = "{{ url_for('static', filename = 'images/model/' + path + furniture['id']|string + '.' + furniture['filetype']) }}" alt = '模型图'>
+        <div id = 'furniture_info'>
+            <h2 id = 'furniture_title'>{{ furniture['title'] }}</h2>
+            <div id = 'furniture_model' class = 'furniture_box'>
+                <div class = 'furniture_label'>模型：</div>
+                <div class = 'furniture_value'>{{ furniture['model'] }}</div>
+            </div>
+            <div id = 'furniture_color' class = 'furniture_box'>
+                <div class = 'furniture_label'>色系：</div>
+                <div class = 'furniture_value'>{{ furniture['color'] }}</div>
+            </div>
+            <div id = 'furniture_material' class = 'furniture_box'>
+                <div class = 'furniture_label'>材质：</div>
+                <div class = 'furniture_value'>{{ furniture['material'] }}</div>
+            </div>
+            <div id = 'furniture_style' class = 'furniture_box'>
+                <div class = 'furniture_label'>风格：</div>
+                <div class = 'furniture_value'>
+                    {% for sty in furniture['style'].split('&') %}
+                        <span class = 'styleWords'>
+                            {% if sty == 'Americano' %}
+                                美式
+                            {% elif sty == 'Arcadian' %}
+                                田园式
+                            {% elif sty == 'European' %}
+                                欧式
+                            {% elif sty == 'HongKong' %}
+                                港式
+                            {% elif sty == 'JaneEuropean' %}
+                                简欧
+                            {% elif sty == 'Japanese' %}
+                                日式
+                            {% elif sty == 'Mediterranean' %}
+                                地中海式
+                            {% elif sty == 'MildLuxury' %}
+                                轻奢
+                            {% elif sty == 'Modern' %}
+                                现代
+                            {% elif sty == 'NeoChinese' %}
+                                新中式
+                            {% elif sty == 'NorthernEuropean' %}
+                                北欧
+                            {% elif sty == 'Postmodern' %}
+                                后现代
+                            {% endif %}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id = 'furniture_price' class = 'furniture_box'>
+                <div class = 'furniture_label'>价格：</div>
+                <div class = 'furniture_value'>{{ furniture['price'] }}</div>
+                <div class = 'furniture_value'>元/{{ furniture['unit'] }}</div>
+            </div>
+            {% if furniture['size'] != '' %}
+                <div id = 'furniture_size' class = 'furniture_box'>
+                    <div class = 'furniture_label'>尺寸：</div>
+                    <div class = 'furniture_value'>{{ furniture['size'] }}</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

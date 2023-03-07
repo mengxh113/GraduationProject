@@ -1,0 +1,446 @@
+#createTemplate {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+#templateInfo {
+    display: flex;
+    flex-direction: column;
+    margin-top: 27px;
+    width: 25%;
+    height: 95%;
+    margin-right: 15px;
+    background-color: #E2DED7;
+}
+#layoutMenu {
+    display: flex;
+    height: 10%;
+    justify-content: center;
+    align-items: center;
+}
+#layoutMenu>label, .label_unselected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+    width: 20%;
+    border: 1px solid black;
+}
+#layoutMenu>label:hover {
+    background-color: rgb(180, 222, 239);
+}
+.label_selected {
+    background-color: skyblue;
+}
+.label_page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 90%;
+}
+.inputBox {
+    display: flex;
+    width: 95%;
+    height: 5%;
+    margin: 5px 0;
+}
+.inputArea {
+    display: flex;
+    /* flex-direction: column; //模型尺寸 */
+    width: 95%;
+    /* height: 20%; //模型尺寸 */
+    border-radius: 10px;
+    margin: 5px 0;
+}
+#lockWAndH {
+    width: 80%;
+    align-self: center;
+    font-size: 12px;
+    margin: 3px 0;
+}
+#lockWAndH>input {
+    vertical-align: middle;
+}
+.inputArea_box {
+    width: 80%;
+    margin: 3px 0;
+    align-self: center;
+}
+#style_inputBox {
+    display: flex;
+    align-self: center;
+    width: 95%;
+    height: 15%;
+}
+#styleSelector {
+    display: flex;
+    flex-direction: column;
+}
+#remark_inputBox {
+    height: 13%;
+}
+#color_inputBox {
+    height: 15%;
+}
+#tips_inputBox {
+    display: flex;
+    height: 20%;
+    flex-direction: column;
+}
+#tips_inputBox>p {
+    font-size: 14px;
+    color: red;
+    text-indent: 80px;
+}
+#save_inputBox {
+    display: flex;
+    height: 10%;
+    align-items: center;
+    justify-content: center;
+}
+#save_inputBox>input[type = 'submit'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: none;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    height: 90%;
+    width: 60%;
+}
+#styleSelector>tr>td {
+    display: flex;
+    width: 80px;
+}
+.inputBox>input, .inputBox>select {
+    height: 20.8px;
+}
+#title_inputBox>input {
+    text-indent: 8px;
+    width: 250px;
+}
+#width_inputBox>input, #height_inputBox>input {
+    width: 50px;
+}
+.inputBox>textarea {
+    width: 70%;
+    height: 62.4px;
+    resize: none;
+    padding: 3px;
+    text-indent: 5px;
+    font-size: 14px;
+}
+#colorSelector {
+    display: flex;
+    flex-direction: column;
+}
+#colorSelector>div {
+    display: flex;
+}
+
+#floorSelector {
+    display: flex;
+    flex-direction: row;
+}
+.floorBox {
+    display: flex;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px 0;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+.floorSelected {
+    display: flex;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px 0;
+    width: 21px;
+    height: 21px;
+    cursor: pointer;
+    border: 2px solid black;
+}
+.colorBox {
+    display: flex;
+    margin: 2px;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.colorSelected {
+    display: flex;
+    margin: 2px;
+    border-radius: 5px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    border: 2px solid black;
+}
+#red_color {
+    background-color: red;
+}
+#orange_color {
+    background-color: orange;
+}
+#yellow_color {
+    background-color: yellow;
+}
+#green_color {
+    background-color: green;
+}
+#blue_color {
+    background-color: blue;
+}
+#purple_color {
+    background-color: purple;
+}
+#grey_color {
+    background-color: grey;
+}
+#pink_color {
+    background-color: pink;
+}
+#wood_color {
+    background-color: 	BurlyWood;
+}
+#white_color {
+    background-color: white;
+}
+#brown_color {
+    background-color: brown;
+}
+#beige_color {
+    background-color: beige;
+}
+#scale_inputBox>span {
+    vertical-align: middle;
+    font-size: 12px;
+}
+#delete_inputBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+#delete_inputBox>input[type = 'button'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: red;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    height: 50px;
+    width: 60%;
+}
+#modelBank {
+    display: flex;
+    width: 409px;
+    height: 601.912px;
+    position: absolute;
+    margin-left: -415px;
+}
+#modelBank_show {
+    display: flex;
+    width: 409px;
+    height: 601.912px;
+    position: absolute;
+}
+#modelBankMain {
+    height: 100%;
+    width: 384px;
+    background-color: #CDF7F7;
+}
+#modelTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 57.01px !important;
+    color: #CDF7F7;
+    background-color: #AAACB3;
+    font-weight: bold;
+}
+#modelMenu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #E30000;
+    background: linear-gradient(#AAACB3, #CDF7F7);
+}
+#modelMenu>select {
+    padding-bottom: 2px;
+}
+#modelImages {
+    display: flex;
+    margin-top: 10px;
+    padding: 5px;
+    flex-wrap: wrap;
+    max-height: 500px;
+    overflow-y: auto;
+}
+.modelBox {
+    width: 45%;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    margin: 8px 6px;
+    background-color: #F2F6FF;
+    border: 1px solid black;
+}
+.modelTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 300;
+}
+.modelBox>svg {
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+.modelAdd {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.modelAdd>input[type = 'button'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    border: none;
+    font-weight: 500;
+    color: #CDF7F7;
+    background: linear-gradient(#AAACB3, #00041F);
+}
+.modelAdd>input[type = 'button']:hover {
+    cursor: pointer;
+}
+#modelBankNav {
+    display: flex;
+    width: 25px;
+    height: 100%;
+    align-items: center;
+}
+#sideNav {
+    display: flex;
+    flex-direction: column;
+    background-color: #AAACB3;
+    width: 100%;
+    height: 68px;
+}
+#sideNav:hover {
+    cursor: pointer;
+}
+#sideNav>i {
+    transform: rotate(-90deg);
+    color: #CDF7F7;
+    width: 18px;
+    height: 18px;
+}
+#sideNav>i::before {
+    display: flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+}
+#sideNav>label {
+    color: #CDF7F7;
+    writing-mode: vertical-lr;
+    width: 25px;
+    height: 50px;
+}
+#sideNav>label:hover {
+    cursor: pointer;
+}
+#templateImage {
+    width: 98%;
+    height: 95%;
+}
+#templateShow {
+    display: flex;
+    width: 70%;
+    height: 100%;
+}
+#templatePreview {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+}
+#templatePreview>label {
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+    height: 30px;
+}
+#scaleBarBox {
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 300px;
+    height: 30px;
+}
+#scaleBar>polyline {
+    fill: none;
+    stroke: rgb(44, 44, 44);
+    stroke-width: 1px;
+}
+svg {
+    width: 100%;
+    height: 100%;
+}
+#scaleBarBox>svg {
+    width: 220px;
+    height: 30px;
+}
+.layoutGrid_bline {
+    stroke: #E2DED7;
+    stroke-width: 0.8px;
+}
+.layoutGrid_line {
+    stroke: #E2DED7;
+    stroke-width: 0.5px;
+}
+#layoutWallObj {
+    stroke-width: 20;
+    stroke: rgb(102,102,102);
+}
+#layoutWallObj:hover {
+    cursor: pointer;
+    fill:rgb(254, 241, 216);
+}
+#layoutWallContent, .layoutWallBorder {
+    stroke: none;
+    opacity: 0 !important;
+}
+.draggable {
+    fill: white;
+    stroke: #494646;
+    stroke-width: 1;
+    opacity: 0; 
+}
+.draggable_hover {
+    fill: rgb(126, 202, 230);
+    stroke: #494646;
+    stroke-width: 1;
+    opacity: 0.7; 
+}

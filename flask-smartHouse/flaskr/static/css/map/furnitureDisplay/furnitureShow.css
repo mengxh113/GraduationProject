@@ -1,0 +1,36 @@
+@charset "UTF-8";
+#furniture_body {
+    display: flex;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(white, rgb(225, 225, 225));
+}
+#furniture_img {
+    display: flex;
+    width: 600px;
+}
+#furniture_info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 15px;
+}
+#furniture_title {
+    display: flex;
+    height: 70px;
+    align-items: center;
+    justify-content: center;
+}
+.furniture_box {
+    display: flex;
+    padding-left: 20px;
+    width: 100%;
+    font-size: 18px;
+    line-height: 2;
+}
+.furniture_value {
+    margin-top: 2px;
+    font-family: 'kaiti';
+    font-weight: bolder;
+    color: rgb(46, 123, 248);
+}

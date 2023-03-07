@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}：文章详情{% endblock %}
+{% block header %}<h3>文章详情</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/article/articleShow.css') }}">
+    <!-- editormd CSS文件 -->
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'editormd/css/editormd.css') }}">
+    <!-- editormd JS相关文件 -->
+    <script src = "https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src = "{{ url_for('static', filename = 'editormd/editormd.min.js') }}"></script>
+    <!-- editormd JS相关文件 -->
+	<script src = "{{ url_for('static', filename = 'js/jquery.min.js')}}"></script>
+	<script src = "{{ url_for('static', filename = 'editormd/lib/marked.min.js') }}"></script>
+	<script src = "{{ url_for('static', filename = 'editormd/lib/prettify.min.js') }}"></script>
+	<script src = "{{ url_for('static', filename = 'editormd/lib/raphael.min.js') }}"></script>
+	<script src = "{{ url_for('static', filename = 'editormd/lib/underscore.min.js') }}"></script>
+	<script src = "{{ url_for('static', filename = 'editormd/lib/sequence-diagram.min.js') }}"></script>
+	<script src = "{{ url_for('static', filename = 'editormd/lib/flowchart.min.js') }}"></script>
+	<script src = "{{ url_for('static', filename = 'editormd/lib/jquery.flowchart.min.js') }}"></script>
+    <script src = "{{ url_for('static', filename = 'editormd/editormd.min.js') }}"></script>
+ 	<!-- editormd CSS文件 -->
+	<link id = "theme-style" rel = "stylesheet" href = "{{url_for('static', filename = 'css/prettify.css')}}">
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'editormd/css/editormd.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<div id = 'article_body'>
+    <div id = 'article_header'>
+        <h1>{{ article['title'] }}</h1>
+        <h6>编者：{{ article['username'] }}&nbsp;&nbsp;分类：{{ article['theme'] }}&nbsp;&nbsp;发布时间：{{ article['creation_time'] }}</h6>
+    </div>
+    <div id = 'text_editormd'>
+        <textarea style = "display: none;" placeholder = "markdown语言">{{ article['content'] }}</textarea>
+    </div>
+</div>
+<script type = "text/javascript">
+	var textEditor;
+	$(function(){
+		textEditor = editormd.markdownToHTML("text_editormd", {
+			width: "100%",
+			height: 575,
+			path: "{{ url_for('static', filename = 'editormd/lib/') }}",
+			preview: true,
+			watch: true,
+			editor: false,
+		});
+	});
+	</script>
+{% endblock %}

@@ -1,0 +1,113 @@
+.content {
+    flex-direction: column;
+}
+#priceEstimate {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(white, rgb(225, 225, 225));
+}
+#rough {
+    height: 30%;
+    width: 80%;
+}
+#detailed {
+    height: 55%;
+    width: 80%;
+}
+h2 {
+    text-indent: 14px;
+    padding: 10px;
+    color: rgb(107, 99, 99);
+}
+#rough>h2 {
+    height: 18%;
+}
+#detailed>h2 {
+    height: 10%;
+}
+#roughPrice {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    padding: 0 20px;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+.inputBox {
+    display: flex;
+    flex-direction: row;
+}
+#provinceSelector {
+    display: flex;
+    width: 130px;
+}
+#citySelector {
+    display: flex;
+    width: 170px;
+}
+optgroup {
+    display: flex;
+}
+optgroup>option {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+input[type = 'submit'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid black;
+    background: linear-gradient(rgb(192, 224, 238), rgb(117, 201, 235));
+    cursor: pointer;
+}
+input[type = 'submit']:hover {
+    color: white;
+    background-color: skyblue;
+}
+#detailedPrice {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    padding: 0 20px;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+input[type = 'number'] {
+    width: 60px;
+}
+#output {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 7%;
+}
+#priceOutput {
+    display: flex;
+    width: 80%;
+    height: 60%;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: rgb(244, 55, 55);
+    background-color: white;
+}
+#priceEqual {
+    display: flex;
+    width: 80%;
+    height: 40%;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    background-color: white;
+}

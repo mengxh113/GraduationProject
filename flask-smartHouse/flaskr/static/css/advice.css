@@ -1,0 +1,45 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+}
+.header>h3 {
+    font-weight: normal;
+}
+#advice {
+    display: flex;
+    width: 100%;
+    margin: 5% 20% 0;
+    padding: 0 10% 0;
+    flex-direction: column;
+    align-items: center;
+}
+#advice>input, textarea {
+    margin-top: 5px;
+    text-indent: 8px;
+    width: 100%;
+}
+textarea {
+    resize:none;
+}
+label {
+    align-self: flex-start;
+}
+#content {
+    height: 20%;
+}
+#adviceButton {
+    display: flex;
+    justify-content: center;
+    border: white 1px solid;
+    font-size: 18px;
+    color: white;
+    border-radius: 20px;
+    background-color: rgb(13, 166, 226);
+    height: 10%;
+    width: 40% !important;
+}
+#adviceButton:hover {
+    cursor: pointer;
+    background-color: rgb(89, 196, 238);
+}

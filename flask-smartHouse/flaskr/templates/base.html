@@ -1,0 +1,212 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<html>
+    <head>
+        <title>
+            家装智能化服务平台—智慧家{% block title %}{% endblock %}
+        </title>
+        <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+        {% block stylesheet %}{% endblock %}
+    </head>
+    <body>
+        <div id = 'menu'>
+            <div id = 'logo'>
+                <img onclick = "javascript:Home()" src = "{{ url_for('static', filename = 'images/logo/logo.png') }}" alt = 'logo'>&nbsp;
+                <span class = 'mainOption' onmouseover = "this.childNodes[3].style = 'display: flex; flex-direction: column;'" onmouseleave = "this.childNodes[3].style = 'display: none;'">
+                    <div id = 'logo-text' onclick = "javascript:Home()">
+                        <h1>智慧家</h1>
+                        <h5>smart house</h5>
+                    </div>
+                    <span class = 'otherOptions'>
+                        <a href = "{{ url_for('auth.index') }}" class = 'optionX'>首页</a>
+                        <a href = "{{ url_for('map.priceEstimate') }}" class = 'optionX'>价格估算</a>
+                        <a href = "{{ url_for('map.styleDisplay', filter = '全部', key = '', type = '全部', area = '全部', style = '全部', func = '全部') }}" class = 'optionX'>装修风格展示</a>
+                        <a href = "{{ url_for('map.furnitureDisplay', filter = '全部', key = '', model = '全部', color = '全部', material = '全部', style = '全部') }}" class = 'optionX'>建材家具展示</a>
+                        <a href = "{{ url_for('map.article', filter = '全部', key = '', selected = '全部') }}" class = 'optionX'>文章库</a>
+                        <a href = "{{ url_for('map.smartLayout', filter = '全部', key = '', func = '全部', style = '全部', width = '全部', height = '全部', demand = '全部') }}" class = 'optionX'>智能布局</a>
+                    </span>
+                </span>
+            </div>
+            <header>
+                {% block header %}
+            	    <h3>智能家居，造温馨之家！</h3>
+                {% endblock %}
+            </header>
+            <div id = 'info'>
+                {% if not g.user %}
+                    <img class = 'headshot' src = "{{ url_for('static', filename = 'images/headshot/default.jpg') }}" alt = '未登录'>&nbsp;
+                {% else %}
+                    <img title = '个人信息管理' class = 'headshot' src = "{{ url_for('static', filename = g.user['headshot']) }}" alt = {{ g.user['username'] }} onmouseover = "style = 'cursor: pointer';" onclick = "javascript:information()";">&nbsp;
+                {% endif %}
+                <p>
+                    {% if not g.user %}
+                	    <a href = "{{ url_for('auth.login') }}">登录</a>&nbsp;/&nbsp;<a href = "{{ url_for('auth.register') }}">注册</a>
+                    {% else %}
+                        <span class = 'mainOption' onmouseover = "this.childNodes[3].style = 'display: flex; flex-direction: column;'" onmouseleave = "this.childNodes[3].style = 'display: none;'">
+                            <a id = 'username'>{{ g.user['username'] }}</a>
+                            <span class = 'otherOptions'>
+                                <br>
+                                <a href = "{{ url_for('infoManagement.information') }}" class = 'optionX'>个人信息</a>
+                                {% if g.user['id'][:5] == 'ADMIN' %}
+                                    <a href = "{{ url_for('infoManagement.userManagement') }}" class = 'optionX'>用户管理</a>
+                                {% endif %}
+                                <a href = "{{ url_for('infoManagement.modifyPassword') }}" class = 'optionX'>修改密码</a>
+                                <a class = 'optionX' name = 'exit' href = "{{ url_for('auth.logout') }}">退出登录</a>
+                            </span>
+                        </span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class = 'content'>
+            {% block content %}
+			    <p>Content!</p>
+            {% endblock %}
+        </div>
+        <sub>
+            <a href = "{{ url_for('auth.about') }}">关于我们</a>&nbsp;|&nbsp;Copyright &copy; 2022 Kha'Zix. All rights reserved.&nbsp;<a href = "http://beian.miit.gov.cn/" target = "_blank">皖ICP备2022002303号</a>&nbsp;|&nbsp;<a href = "{{ url_for('auth.advice') }}">反馈建议</a>
+        </sub>
+    </body>
+</html>
+<script>
+    function Home() {
+        window.location.href = "{{ url_for('auth.index') }}";
+    }
+    function information() {
+        window.location.href = "{{ url_for('infoManagement.information') }}";
+    }
+    var checkPara = [];
+    var checkVal = [];
+    var errorText =[];
+    function check(e, type) {
+        tips = document.getElementById('tips');
+        btn = document.getElementsByName('button')[0].childNodes[1];
+        if(checkPara.includes(type) == false) {
+            checkPara.push(type);
+            checkVal.push(0);
+            errorText.push('');
+        }
+        var i = checkPara.indexOf(type);
+        switch(type) {
+            case 'account':
+                if(!(/^[\u4e00-\u9fa5_a-zA-Z0-9_]{1,10}$/.test(e.value)) && !(/^((13[0-9])|(14[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}$/.test(e.value))) {
+                    tips.innerHTML = '请输入正确的用户名或手机号！'
+                    btn.setAttribute("disabled", 'disabled');
+                    checkVal[i] = 1;
+                    errorText[i] = '请输入正确的用户名或手机号！';
+                }
+                else {
+                    tips.innerHTML = '';
+                    btn.removeAttribute("disabled");
+                    checkVal[i] = 0;
+                    errorText[i] = '';
+                }
+                break;
+            case 'username':
+                if(!(/^[\u4e00-\u9fa5_a-zA-Z0-9_]{1,10}$/.test(e.value))) {
+                    tips.innerHTML = '用户名长度为1-10，只能包含中英文、数字和下划线！'
+                    btn.setAttribute("disabled", 'disabled');
+                    checkVal[i] = 1;
+                    errorText[i] = '用户名长度为1-10，只能包含中英文、数字和下划线！';
+                }
+                else {
+                    tips.innerHTML = '';
+                    btn.removeAttribute("disabled");
+                    checkVal[i] = 0;
+                    errorText[i] = '';
+                }
+                break;
+            case 'password':
+                if(!(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z.@$!%*#_~?&^\d]{6,15}$/.test(e.value))) {
+                    tips.innerHTML = '密码长度限制为6-15，至少包括大写/小写字母和数字，特殊字符只能为“.@$!%*#_~?&^”！'
+                    btn.setAttribute("disabled", 'disabled');
+                    checkVal[i] = 1;
+                    errorText[i] = '密码长度限制为6-15，至少包括大写/小写字母和数字，特殊字符只能为“.@$!%*#_~?&^”！';
+                }
+                else {
+                    tips.innerHTML = '';
+                    btn.removeAttribute("disabled");
+                    checkVal[i] = 0;
+                    errorText[i] = '';
+                }
+                break;
+            case 'confirm':
+                if(document.getElementById('password').value == '') {
+                    tips.innerHTML = '请先输入密码！'
+                    btn.setAttribute("disabled", 'disabled');
+                    checkVal[i] = 0;
+                    errorText[i] = '请先输入密码';
+                }
+                else if(e.value != document.getElementById('password').value) {
+                    tips.innerHTML = '确认密码与密码不一致！'
+                    btn.setAttribute("disabled", 'disabled');
+                    checkVal[i] = 1;
+                    errorText[i] = '确认密码与密码不一致！';
+                }
+                else {
+                    tips.innerHTML = '';
+                    btn.removeAttribute("disabled");
+                    checkVal[i] = 0;
+                    errorText[i] = '';
+                }
+                break;
+            case 'phone':
+                if(!(/^((13[0-9])|(14[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}$/.test(e.value))) {
+                    tips.innerHTML = '请输入正确的手机号！'
+                    btn.setAttribute("disabled", 'disabled');
+                    checkVal[i] = 1;
+                    errorText[i] = '请输入正确的手机号！';
+                }
+                else {
+                    tips.innerHTML = '';
+                    btn.removeAttribute("disabled");
+                    checkVal[i] = 0;
+                    errorText[i] = '';
+                }
+                break;
+            case 'code':
+                if(!(/^[0-9]*$/.test(e.value))) {
+                    console.log('error');
+                    console.log(e.value);
+                    tips.innerHTML = '验证码只能是数字！'
+                    btn.setAttribute("disabled", 'disabled');
+                    checkVal[i] = 1;
+                    errorText[i] = '验证码只能是数字！';
+                }
+                else {
+                    tips.innerHTML = '';
+                    btn.removeAttribute("disabled");
+                    checkVal[i] = 0;
+                    errorText[i] = '';
+                }
+                break;
+            case 'email':
+                if(e.value == '') {
+                    tips.innerHTML = '';
+                    btn.removeAttribute("disabled");
+                    checkVal[i] = 0;
+                    errorText[i] = '';
+                }
+                else if(!(/^[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/.test(e.value))) {
+                    tips.innerHTML = '请输入正确的邮箱！'
+                    btn.setAttribute("disabled", 'disabled');
+                    checkVal[i] = 1;
+                    errorText[i] = '请输入正确的邮箱！';
+                }
+                else {
+                    tips.innerHTML = '';
+                    btn.removeAttribute("disabled");
+                    checkVal[i] = 0;
+                    errorText[i] = '';
+                }
+                break;
+            case 'age':
+                if(document.getElementById('age').value > 120) {
+                    document.getElementById('age').value = 120;
+                }
+                else if(document.getElementById('age').value < 0) {
+                    document.getElementById('age').value = 0;
+                }
+                break;
+        }
+    }
+</script>

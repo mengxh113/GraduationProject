@@ -1,0 +1,346 @@
+<!-- 装修风格展示区 -->
+{% extends 'base.html' %}
+
+{% block title %}：装修风格展示{% endblock %}
+{% block header %}<h3>装修风格展示</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/styleDisplay/styleDisplay.css') }}">
+	<link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'images/icon/iconfont/iconfont.css') }}"> 
+{% endblock %}
+
+{% block content %}
+    <div id = 'hider' class = 'hide'></div>
+	<div id = 'styleDisplay'>
+		<div id = 'searchBox'>
+			<form id = 'searchKey' method = 'POST' action = "{{ url_for('map.styleDisplay', filter = filter, key = key, type = type, func = func, area = area, style = style) }}">
+				<input id = 'key' name = 'key' value = '{{ key }}' placeholder = "请输入图片标题进行检索...">&nbsp;
+				<input name = 'type' value = '{{ type }}' style = "display: none;">
+                <input name = 'func' value = '{{ func }}' style = "display: none;">
+                <input name = 'area' value = '{{ area }}' style = "display: none;">
+                <input name = 'style' value = '{{ style }}' style = "display: none;">
+				<input type = 'submit' value = '搜索'>
+			</form>
+			<div class = 'searchClass'>
+				<label id = 'type'>房间类别</label>
+				<div id = 'typeClass'>
+					{% for filter in filters["type"] %}
+						{% if filter == type %}
+							<a id = {{ filter }} href = "{{ url_for('map.styleDisplay', filter = filter, key = key, type = filter, func = func, area = area, style = style) }}">{{ filter }}</a>
+						{% else %}
+							<a id = {{ filter }} href = "{{ url_for('map.styleDisplay', filter = filter, key = key, type = filter, func = func, area = area, style = style) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'func'>功能分区</label>
+				<div id = 'funcClass'>
+					{% for filter in filters["func"] %}
+						{% if filter == func %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.styleDisplay', filter = filter, key = key, type = type, func = filter, area = area, style = style) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.styleDisplay', filter = filter, key = key, type = type, func = filter, area = area, style = style) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'area'>房间面积</label>
+				<div id = 'areaClass'>
+					{% for filter in filters["area"] %}
+						{% if filter == area %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.styleDisplay', filter = filter, key = key, type = type, func = func, area = filter, style = style) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.styleDisplay', filter = filter, key = key, type = type, func = func, area = filter, style = style) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'style'>装修风格</label>
+				<div id = 'styleClass'>
+					{% for filter in filters["style"] %}
+						{% if filter == style %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.styleDisplay', filter = filter, key = key, type = type, func = func, area = area, style = filter) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.styleDisplay', filter = filter, key = key, type = type, func = func, area = area, style = filter) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div id = 'styleImageBank'>
+			{% if g.user['status'] == 1 %}
+				<div class = 'styleBox'>
+					<a onclick = "document.getElementById('uploadImageBox').setAttribute('style', 'display: flex'); document.getElementById('hider').setAttribute('class', 'show');"><span>⊕</span>&nbsp;新增图片</a>
+				</div>
+                <div id = 'uploadImageBox' style = "display: none;">
+                    <div id = 'uploadImageBox_header'>
+                        <span>新增图片</span>
+                        <i id = 'uploadImageBox_close' class = 'iconfont icon-guanbixiao'  onclick = "document.getElementById('uploadImageBox').setAttribute('style', 'display: none'); document.getElementById('hider').setAttribute('class', 'hide');"></i>
+                    </div>
+                    <form id = 'uploadImageBox_content' enctype = "multipart/form-data" method = 'POST' action = "{{ url_for('map.uploadStyleImage') }}">
+                        <div class = 'uploadImageBox_inputBox'>
+                            <label for = 'title' id = 'uploadImageBox_title'>图片标题：</label>
+                            <input name = 'title' placeholder = "请输入图片描述..." required>
+                        </div>
+                        <div class = 'uploadImageBox_inputBox'>
+                            <label for = 'image' id = 'uploadImageBox_image'>图片地址：</label>
+                            <input type = file name = 'image' accept = 'image/*' required>
+                        </div>
+                        <div class = 'uploadImageBox_inputBox'>
+                            <label for = 'type' id = 'uploadImageBox_type'>房间类型：</label>
+                            <select name = 'type' required>
+                                <option value = '单层'>单层</option>
+                                <option value = '多层'>多层</option>
+                            </select>
+                            <label for = 'func' id = 'uploadImageBox_func'>功能分区：</label>
+                            <select name = 'func' required>
+                                <option value = '客厅'>客厅</option>
+                                <option value = '厨房'>厨房</option>
+                                <option value = '卧室'>卧室</option>
+                                <option value = '卫生间'>卫生间</option>
+                            </select>
+                        </div>
+                        <div class = 'uploadImageBox_inputBox'>
+                            <label for = 'area' id = 'uploadImageBox_area'>房间面积：</label>
+                            <input type = 'number' name = 'area' min = 0 max = 999 required>
+                            <label for = 'style' id = 'uploadImageBox_style'>房间风格：</label>
+                            <a id = 'styleFolder' onclick = "Folder(this);"></a>
+                            <table id = 'uploadImageBox_styleChoice' class = 'uploadImageBox_styleChoice_hide'>
+                                <tr>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Americano'>美式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Arcadian'>田园式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'European'>欧式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'HongKong'>港式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'JaneEuropean'>简欧</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Japanese'>日式</td>
+                                </tr>
+                                <tr>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Mediterranean'>地中海式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'MildLuxury'>轻奢</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Modern'>现代</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'NeoChinese'>新中式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'NorthernEuropean'>北欧</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Postmodern'>后现代</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id = 'uploadImageBox_footer'>
+                            <input type = 'submit' value = '确定'>
+                            <button onclick = "document.getElementById('uploadImageBox').setAttribute('style', 'display: none'); document.getElementById('hider').setAttribute('class', 'hide');">取消</button>
+                        </div>
+                    </form>
+                </div>
+			{% endif %}
+			{% for style in styles %}
+				<div class = 'styleBox'>
+					<div class = 'boxBody'>
+						<div class = 'boxBody_header'>
+							<span class = 'boxBody_title'>{{ style['title'] if style['title']|length <= 8 else style['title'][:8] + '...' }}</span>
+                            {% if g.user['status'] == 1 and style['id'] > 12 %}
+                                <a id = 'boxBody_close' class = 'iconfont icon-guanbixiao' href = "{{ url_for('map.delete', id = style['id'], type = 'style') }}"></a>
+                            {% endif %}
+						</div>
+                        <img title = "点击进入详情页面" onmouseover = "this.style = 'cursor: pointer';" onclick = "this.nextElementSibling.click();" src = "{{ url_for('static', filename = 'images/buildStyle/' + style['style'].split('&')[0] + '/' + style['id']|string + '.' + style['filetype']) }}" alt = '效果图'>
+                        <a href = "{{ url_for('map.styleShow', id = style['id']) }}" style = "display: none;"></a>
+						<div class = 'boxBody_sub'>
+							<div class = 'boxBody_style'>
+                                {% for sty in style['style'].split('&') %}
+                                    <span class = 'styleWords'>
+                                        {% if sty == 'Americano' %}
+                                            美式
+                                        {% elif sty == 'Arcadian' %}
+                                            田园式
+                                        {% elif sty == 'European' %}
+                                            欧式
+                                        {% elif sty == 'HongKong' %}
+                                            港式
+                                        {% elif sty == 'JaneEuropean' %}
+                                            简欧
+                                        {% elif sty == 'Japanese' %}
+                                            日式
+                                        {% elif sty == 'Mediterranean' %}
+                                            地中海式
+                                        {% elif sty == 'MildLuxury' %}
+                                            轻奢
+                                        {% elif sty == 'Modern' %}
+                                            现代
+                                        {% elif sty == 'NeoChinese' %}
+                                            新中式
+                                        {% elif sty == 'NorthernEuropean' %}
+                                            北欧
+                                        {% elif sty == 'Postmodern' %}
+                                            后现代
+                                        {% endif %}
+                                    </span>
+                                {% endfor %}
+                            </div>
+							<div style = 'display: none;' onclick = "like(this);" onmouseover = "nolike(this);" onmouseleave="nolike_after(this);" class = 'boxBody_like'>收藏<i class = 'iconfont icon-shoucang'></i></div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<script>
+        window.onload = function() {
+            document.getElementById('styleFolder').innerHTML = '展开';
+            type_selected = document.getElementsByName('type')[0].value;
+            typeLabs = document.getElementById('typeClass').childNodes;
+			for(var i = 1; i < typeLabs.length; i = i + 2) {
+				if(typeLabs[i].id == type_selected) {
+                    typeLabs[i].setAttribute('class', 'selected');
+                }
+                else {
+                    typeLabs[i].setAttribute('class', 'unselected');
+                }
+			}
+            func_selected = document.getElementsByName('func')[0].value;
+            funcLabs = document.getElementById('funcClass').childNodes;
+			for(var i = 1; i < funcLabs.length; i = i + 2) {
+				if(funcLabs[i].id == func_selected) {
+                    funcLabs[i].setAttribute('class', 'selected');
+                }
+                else {
+                    funcLabs[i].setAttribute('class', 'unselected');
+                }
+			}
+            style_selected = document.getElementsByName('style')[0].value;
+            styleLabs = document.getElementById('styleClass').childNodes;
+			for(var i = 1; i < styleLabs.length; i = i + 2) {
+				if(styleLabs[i].id == style_selected) {
+                    styleLabs[i].setAttribute('class', 'selected');
+                }
+                else {
+                    styleLabs[i].setAttribute('class', 'unselected');
+                }
+			}
+            area_selected = document.getElementsByName('area')[0].value;
+            areaLabs = document.getElementById('areaClass').childNodes;
+			for(var i = 1; i < areaLabs.length; i = i + 2) {
+				if(areaLabs[i].id == area_selected) {
+                    areaLabs[i].setAttribute('class', 'selected');
+                }
+                else {
+                    areaLabs[i].setAttribute('class', 'unselected');
+                }
+			}
+        }
+        const canvas = document.querySelector('.content'); // 画布
+        const canvas_centent = canvas.getBoundingClientRect();//获取画布的大小
+        const node = document.querySelector('#uploadImageBox'); // 节点
+
+        class Drag {
+            constructor (canvas, node ,canvas_centent) {
+                this.canvas = canvas;
+                this.canvas_centent = canvas_centent;
+                this.canvas.ondragover = event => event.preventDefault(); // 设置画布可被拖入元素
+                this.node = node;
+                node.setAttribute('draggable', true); // 设置元素可被拖动effectAlloweddropEffect
+                node.addEventListener('dragstart', this.dragstart.bind(this));
+                node.addEventListener('dragend', event => this.dragend(event));
+            }
+        
+            dragstart (event) {
+                this.ondragstartX = event.x;
+                this.ondragstartY = event.y;
+                this.node.style.opacity = 1;
+                // this.setAttribute('effectAllowed', 'none');
+            }
+        
+            dragend (event) {
+                const offsetX = event.x - this.ondragstartX;
+                const offsetY = event.y - this.ondragstartY;
+
+                //获取盒子的大小
+                const node_width = node.offsetWidth;
+                const node_height = node.offsetHeight;
+                
+                //获取画布的大小
+                const canvas_width = canvas_centent.width;
+                const canvas_height = canvas_centent.height;
+                
+                //设置盒子到鼠标的位置
+                let left = node.offsetLeft + offsetX;
+                let top = node.offsetTop + offsetY;
+
+                if(left > canvas_width - node_width) {
+                    left = canvas_width - node_width - 1;
+                }
+                if(left < 0 ) {
+                    left = 1;
+                }
+                if(top > canvas_height + canvas.offsetTop - node_height) {
+                    top = canvas_height + canvas.offsetTop - node_height - 10;
+                }
+                if(top < canvas.offsetTop) {
+                    top = canvas.offsetTop;
+                }
+                node.style.left = left + 'px';
+                node.style.top = top + 'px';
+                
+                node.style.opacity = 1;
+            }
+        }
+
+        // 设置可拖动的元素及画布
+        new Drag(canvas, node, canvas_centent);
+        function Folder(e) {
+            tab = document.getElementById('uploadImageBox_styleChoice');
+            if(tab.getAttribute('class') == 'uploadImageBox_styleChoice_hide') {
+                // 展开
+                tab.setAttribute('class', 'uploadImageBox_styleChoice_show');
+                document.getElementById('styleFolder').innerHTML = '取消展开';
+            }
+            else {
+                // 取消展开
+                tab.setAttribute('class', 'uploadImageBox_styleChoice_hide');
+                document.getElementById('styleFolder').innerHTML = '展开';
+            }
+        }
+        function like(e) {
+            icon = e.childNodes[1];
+            if(icon.getAttribute('class') == 'iconfont icon-shoucang') {
+                e.innerHTML = "已收藏<i class = 'iconfont icon-shoucang1'></i>";
+            }
+            else {
+                e.innerHTML = "收藏<i class = 'iconfont icon-shoucang'></i>";
+            }
+        }
+        function nolike(e) {
+            console.log(e.childNodes[0]);
+            if(e.childNodes[1].getAttribute('class') == 'iconfont icon-shoucang1') {
+                e.innerHTML = "取消收藏<i class = 'iconfont icon-shoucang1'></i>";
+            }
+        }
+        function nolike_after(e) {
+            console.log(e.childNodes[0]);
+            if(e.childNodes[1].getAttribute('class') == 'iconfont icon-shoucang1') {
+                e.innerHTML = "已收藏<i class = 'iconfont icon-shoucang1'></i>";
+            }
+        }
+        formObj = document.getElementsByTagName('form')[1];
+        function choiceCheck() {
+            options = document.getElementsByName('style');
+            num = 0;
+            for(var i = 1; i < options.length; i++) {
+                if(options[i].checked)
+                    num++;
+            }
+            if(num == 0) {
+                alert("请选择至少一种房间风格！");
+                return false;
+            }
+            else if(num > 3) {
+                alert("只能选择最多三种房间风格！");
+                return false;
+            }
+            return true;
+        }
+        formObj.onsubmit = function() {
+            return choiceCheck();
+        }
+    </script>
+{% endblock %}

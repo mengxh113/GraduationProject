@@ -1,0 +1,98 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+}
+#reset {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+#reset>form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: center;
+    justify-content: space-around;
+    height: 40%;
+}
+.inputBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 7%;
+}
+.inputBox>label {
+    display: flex;
+    align-items: center;
+}
+.codeBox {
+    display: flex;
+    font-size: 14px;
+    padding: 2px;
+    width: 174.4px;
+    height: 16.8px;
+    border: 2px solid rgb(170, 170, 170);
+}
+.codeBox:hover {
+    border: rgb(210, 231, 240) 2px solid;
+}
+.codeBox:focus {
+    outline-color: rgb(210, 231, 240);
+}
+.inputBox>input {
+    display: flex;
+    font-size: 14px;
+    padding: 2px;
+    text-indent: 8px;
+    border: 2px solid rgb(170, 170, 170);
+}
+.inputBox>input:hover {
+    border: rgb(210, 231, 240) 2px solid;
+}
+.inputBox>input:focus {
+    outline-color: rgb(210, 231, 240);
+}
+#code {
+    display: flex;
+    text-indent: 8px;
+    width: 93.83px;
+    border: none;
+}
+#code:hover {
+    border: none;
+}
+#code:focus {
+    outline: none;
+}
+#getCode {
+    display: flex;
+    width: 76.645px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: rgb(214, 205, 76);
+    color: rgb(70, 70, 70);
+}
+#getCode:hover {
+    background-color: rgb(175, 168, 64);
+}
+.resetButton {
+    display: flex;
+    justify-content: center;
+    height: 17%;
+}
+.resetButton>input {
+    display: flex;
+    justify-content: center;
+    border: white 1px solid;
+    color: white;
+    border-radius: 5px;
+    background-color: rgb(13, 166, 226);
+    width: 85%;
+}
+.resetButton>input:hover {
+    cursor: pointer;
+    background-color: rgb(89, 196, 238);
+}

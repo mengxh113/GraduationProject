@@ -1,0 +1,425 @@
+<!-- 建材家具展示区 -->
+{% extends 'base.html' %}
+
+{% block title %}：建材家具展示{% endblock %}
+{% block header %}<h3>建材家具展示</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/furnitureDisplay/furnitureDisplay.css') }}">
+	<link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'images/icon/iconfont/iconfont.css') }}"> 
+{% endblock %}
+
+{% block content %}
+    <div id = 'hider' class = 'hide'></div>
+	<div id = 'furnitureDisplay'>
+		<div id = 'searchBox'>
+			<form id = 'searchKey' method = 'POST' action = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = model, color = color, material = material, style = style) }}">
+				<input id = 'key' name = 'key' value = '{{ key }}' placeholder = "请输入建材家具名称进行检索...">&nbsp;
+                <input name = 'filter' value = '{{ filter }}' style = "display: none;">
+				<input name = 'model' value = '{{ model }}' style = "display: none;">
+                <input name = 'color' value = '{{ color }}' style = "display: none;">
+                <input name = 'material' value = '{{ material }}' style = "display: none;">
+                <input name = 'style' value = '{{ style }}' style = "display: none;">
+				<input type = 'submit' value = '搜索'>
+			</form>
+			<div class = 'searchClass'>
+				<label id = 'model'>模型</label>
+				<div id = 'modelClass'>
+                    {% if model == '全部' %}
+                        <a class = 'selected' id = '全部' href = "{{ url_for('map.furnitureDisplay', filter = '全部', key = key, model = '全部', color = color, material = material, style = style) }}">全部</a>
+                    {% else %}
+                        <a class = 'unselected' id = '全部' href = "{{ url_for('map.furnitureDisplay', filter = '全部', key = key, model = '全部', color = color, material = material, style = style) }}">全部</a>
+                    {% endif %}
+                    {% for i in range(filters["model"]|length - 1) %}
+                        {% for filter in filters["model"][i + 1] %}
+                            {% if loop.index == 1 %}
+                                <ul>
+                                {% if i == 0 %}
+                                    <li id = 'interiorFinish' class = 'models'>{{ filter }}<i onclick = "showModels(this)" class = 'iconfont icon-xiala' state = 'fold'></i></li>
+                                {% elif i == 1 %}
+                                    <li id = 'furniture' class = 'models'>{{ filter }}<i onclick = "showModels(this)" class = 'iconfont icon-xiala' state = 'fold'></i></li>
+                                {% elif i == 2 %}
+                                    <li id = 'kitchenAndBathroom' class = 'models'>{{ filter }}<i onclick = "showModels(this)" class = 'iconfont icon-xiala' state = 'fold'></i></li>
+                                {% endif %}
+                                    <div class = 'modelMenu' style = "display: none;">
+                            {% else %}
+                                {% if filter == model %}
+                                    <li>
+                                        <a name = 'model_selection' class = 'model_selected' id = {{ filter }} href = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = filter, color = color, material = material, style = style) }}">{{ filter }}</a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a name = 'model_selection' class = 'model_unselected' id = {{ filter }} href = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = filter, color = color, material = material, style = style) }}">{{ filter }}</a>
+                                    </li>
+                                {% endif %}
+                                {% if loop.last %}
+                                    </div>
+                                </ul>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'color'>色系</label>
+				<div id = 'colorClass'>
+					{% for filter in filters["color"] %}
+						{% if filter == color %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = model, color = filter, material = material, style = style) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = model, color = filter, material = material, style = style) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'material'>材质</label>
+				<div id = 'materialClass'>
+					{% for filter in filters["material"] %}
+						{% if filter == material %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = model, color = color, material = filter, style = style) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = model, color = color, material = filter, style = style) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+            <div class = 'searchClass'>
+				<label id = 'style'>风格</label>
+				<div id = 'styleClass'>
+					{% for filter in filters["style"] %}
+						{% if filter == style %}
+							<a class = 'selected' id = {{ filter }} href = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = model, color = color, material = material, style = filter) }}">{{ filter }}</a>
+						{% else %}
+							<a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = model, color = color, material = material, style = filter) }}">{{ filter }}</a>
+						{% endif %}
+					{% endfor %}
+                    <a class = 'unselected' id = {{ filter }} href = "{{ url_for('map.furnitureDisplay', filter = filter, key = key, model = model, color = color, material = material, style = filter) }}">YY风格</a>
+				</div>
+			</div>
+		</div>
+		<div id = 'furnitureImageBank'>
+			{% if g.user['status'] == 1 %}
+				<div class = 'furnitureBox'>
+					<a onclick = "document.getElementById('uploadImageBox').setAttribute('style', 'display: flex'); document.getElementById('hider').setAttribute('class', 'show');"><span>⊕</span>&nbsp;新增图片</a>
+				</div>
+                <div id = 'uploadImageBox' style = "display: none;">
+                    <div id = 'uploadImageBox_header'>
+                        <span>新增图片</span>
+                        <i id = 'uploadImageBox_close' class = 'iconfont icon-guanbixiao'  onclick = "document.getElementById('uploadImageBox').setAttribute('style', 'display: none'); document.getElementById('hider').setAttribute('class', 'hide');"></i>
+                    </div>
+                    <form id = 'uploadImageBox_content' enctype = "multipart/form-data" method = 'POST' action = "{{ url_for('map.uploadFurnitureImage') }}">
+                        <div class = 'uploadImageBox_inputBox'>
+                            <label for = 'title' id = 'uploadImageBox_title'>标题：</label>
+                            <input name = 'title' placeholder = "请输入图片标题..." required>
+                        </div>
+                        <div class = 'uploadImageBox_inputBox'>
+                            <label for = 'image' id = 'uploadImageBox_image'>图片：</label>
+                            <input type = file name = 'image' accept = 'image/*' required>
+                        </div>
+                        <div class = 'uploadImageBox_inputBox'>
+                            <label for = 'image' id = 'uploadImageBox_image'>模型：</label>
+                            <select name = 'model' required>
+                                <optgroup onmouseover = "showOptions()" onmouseleave = "hideOptions()" id = 'interiorFinish' label = "硬装">
+                                    <option class = 'interiorFinish' value = '门'>门</option>
+                                    <option class = 'interiorFinish' value = '窗'>窗</option>
+                                    <option class = 'interiorFinish' value = '地面'>地面</option>
+                                    <option class = 'interiorFinish' value = '墙面'>墙面</option>
+                                    <option class = 'interiorFinish' value = '结构部件'>结构部件</option>
+                                </optgroup>
+                                <optgroup onmouseover = "showOptions()" onmouseleave = "hideOptions()" id = 'furniture' label = '家具'>
+                                    <option class = 'furniture' value = '沙发'>沙发</option>
+                                    <option class = 'furniture' value = '床'>床</option>
+                                    <option class = 'furniture' value = '桌子'>桌子</option>
+                                    <option class = 'furniture' value = '椅子|凳子'>椅子|凳子</option>
+                                    <option class = 'furniture' value = '柜架'>柜架</option>
+                                </optgroup>
+                                <optgroup onmouseover = "showOptions()" onmouseleave = "hideOptions()" id = 'kitchenAndBathroom' label = '厨卫'>
+                                    <option class = 'kitchenAndBathroom' value = '橱柜'>橱柜</option>
+                                    <option class = 'kitchenAndBathroom' value = '浴室柜'>浴室柜</option>
+                                    <option class = 'kitchenAndBathroom' value = '洗手台'>洗手台</option>
+                                    <option class = 'kitchenAndBathroom' value = '马桶'>马桶</option>
+                                    <option class = 'kitchenAndBathroom' value = '浴缸'>浴缸</option>
+                                </optgroup>
+                            </select>
+                            <label for = 'color' id = 'uploadImageBox_color'>色系：</label>
+                            <select name = 'color' required>
+                                <option value = '红色'>红色</option>
+                                <option value = '橙色'>橙色</option>
+                                <option value = '黄色'>黄色</option>
+                                <option value = '绿色'>绿色</option>
+                                <option value = '蓝色'>蓝色</option>
+                                <option value = '紫色'>紫色</option>
+                                <option value = '黑色'>黑色</option>
+                                <option value = '灰色'>灰色</option>
+                                <option value = '粉色'>粉色</option>
+                                <option value = '木色'>木色</option>
+                                <option value = '白色'>白色</option>
+                                <option value = '褐色'>褐色</option>
+                                <option value = '米色'>米色</option>
+                            </select>
+                            <label for = 'material' id = 'uploadImageBox_material'>材质：</label>
+                            <select name = 'material' required>
+                                <option value = '木质'>木质</option>
+                                <option value = '布料'>布料</option>
+                                <option value = '金属'>金属</option>
+                                <option value = '陶瓷'>陶瓷</option>
+                                <option value = '石材'>石材</option>
+                                <option value = '玻璃'>玻璃</option>
+                                <option value = '塑料'>塑料</option>
+                            </select>
+                        </div>
+                        <div class = 'uploadImageBox_inputBox'>
+                            <label for = 'price' id = 'uploadImageBox_price'>价格：</label>
+                            <input type = 'number' name = 'price' min = 0 step = 0.01 required>
+                            <label for = 'unit' id = 'uploadImageBox_unit'>元&nbsp;/</label>
+                            <select name = 'unit' required>
+                                <option value = 'm²'>m²</option>
+                                <option value = '扇'>扇</option>
+                                <option value = '张'>张</option>
+                                <option value = '个'>个</option>
+                                <option value = '套'>套</option>
+                            </select>
+                            <label for = 'size' id = 'uploadImageBox_size'>尺寸：</label>
+                            <input name = 'size'>
+                        </div>
+                        <div class = 'uploadImageBox_inputBox'>
+                            <label for = 'style' id = 'uploadImageBox_style'>风格：</label>
+                            <a id = 'styleFolder' onclick = "Folder(this);"></a>
+                            <table id = 'uploadImageBox_styleChoice' class = 'uploadImageBox_styleChoice_hide'>
+                                <tr>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Americano'>美式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Arcadian'>田园式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'European'>欧式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'HongKong'>港式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'JaneEuropean'>简欧</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Japanese'>日式</td>
+                                </tr>
+                                <tr>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Mediterranean'>地中海式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'MildLuxury'>轻奢</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Modern'>现代</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'NeoChinese'>新中式</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'NorthernEuropean'>北欧</td>
+                                    <td><input type = 'checkbox' name = 'style' value = 'Postmodern'>后现代</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id = 'uploadImageBox_footer'>
+                            <input type = 'submit' value = '确定'>
+                            <button onclick = "document.getElementById('uploadImageBox').setAttribute('style', 'display: none'); document.getElementById('hider').setAttribute('class', 'hide');">取消</button>
+                        </div>
+                    </form>
+                </div>
+			{% endif %}
+			{% for furniture, path in furnitures %}
+				<div class = 'furnitureBox'>
+					<div class = 'boxBody'>
+						<div class = 'boxBody_header'>
+							<span class = 'boxBody_title'>{{ furniture['title'] if furniture['title']|length <= 8 else furniture['title'][:8] + '...' }}</span>
+                            {% if g.user['status'] == 1 and furniture['id'] > 15 %}
+                                <a id = 'boxBody_close' class = 'iconfont icon-guanbixiao' href = "{{ url_for('map.delete', id = furniture['id'], type = 'furniture') }}"></a>
+                            {% endif %}
+						</div>
+                        <img title = "点击进入详情页面" onmouseover = "this.style = 'cursor: pointer';" onclick = "this.nextElementSibling.click();" src = "{{ url_for('static', filename = 'images/model/' + path + furniture['id']|string + '.' + furniture['filetype']) }}" alt = '模型图'>
+                        <a href = "{{ url_for('map.furnitureShow', id = furniture['id']) }}" style = "display: none;"></a>
+						<div class = 'boxBody_sub'>
+							<div class = 'boxBody_style'>
+                                {% for sty in furniture['style'].split('&') %}
+                                    <span class = 'styleWords'>
+                                        {% if sty == 'Americano' %}
+                                            美式
+                                        {% elif sty == 'Arcadian' %}
+                                            田园式
+                                        {% elif sty == 'European' %}
+                                            欧式
+                                        {% elif sty == 'HongKong' %}
+                                            港式
+                                        {% elif sty == 'JaneEuropean' %}
+                                            简欧
+                                        {% elif sty == 'Japanese' %}
+                                            日式
+                                        {% elif sty == 'Mediterranean' %}
+                                            地中海式
+                                        {% elif sty == 'MildLuxury' %}
+                                            轻奢
+                                        {% elif sty == 'Modern' %}
+                                            现代
+                                        {% elif sty == 'NeoChinese' %}
+                                            新中式
+                                        {% elif sty == 'NorthernEuropean' %}
+                                            北欧
+                                        {% elif sty == 'Postmodern' %}
+                                            后现代
+                                        {% endif %}
+                                    </span>
+                                {% endfor %}
+                            </div>
+							<div style = 'display: none;' onclick = "like(this);" onmouseover = "nolike(this);" onmouseleave="nolike_after(this);" class = 'boxBody_like'>收藏<i class = 'iconfont icon-shoucang'></i></div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<script>
+        window.onload = function() {
+            document.getElementById('styleFolder').innerHTML = '展开';
+            model_selections = document.getElementsByName('model_selection');
+            filter = document.getElementsByName('filter')[0].value;
+            model_filter = document.getElementsByName('model')[0].value;
+            for(var i = 0;i < model_selections.length;i++) {
+                if(model_selections[i].id == filter || model_selections[i].id == model_filter) {
+                    model = model_selections[i].parentNode.parentNode.previousElementSibling;
+                    model.setAttribute('class', 'model_selected');
+                    model.innerHTML = model_filter + "<i onclick = 'showModels(this)' class = 'iconfont icon-xiala' state = 'fold'></i>";
+                }
+            }
+        }
+        const canvas = document.querySelector('.content'); // 画布
+        const canvas_centent = canvas.getBoundingClientRect();//获取画布的大小
+        const node = document.querySelector('#uploadImageBox'); // 节点
+
+        class Drag {
+            constructor (canvas, node ,canvas_centent) {
+                this.canvas = canvas;
+                this.canvas_centent = canvas_centent;
+                this.canvas.ondragover = event => event.preventDefault(); // 设置画布可被拖入元素
+                this.node = node;
+                node.setAttribute('draggable', true); // 设置元素可被拖动effectAlloweddropEffect
+                node.addEventListener('dragstart', this.dragstart.bind(this));
+                node.addEventListener('dragend', event => this.dragend(event));
+            }
+        
+            dragstart (event) {
+                this.ondragstartX = event.x;
+                this.ondragstartY = event.y;
+                this.node.style.opacity = 1;
+                // this.setAttribute('effectAllowed', 'none');
+            }
+        
+            dragend (event) {
+                const offsetX = event.x - this.ondragstartX;
+                const offsetY = event.y - this.ondragstartY;
+
+                //获取盒子的大小
+                const node_width = node.offsetWidth;
+                const node_height = node.offsetHeight;
+                
+                //获取画布的大小
+                const canvas_width = canvas_centent.width;
+                const canvas_height = canvas_centent.height;
+                
+                //设置盒子到鼠标的位置
+                let left = node.offsetLeft + offsetX;
+                let top = node.offsetTop + offsetY;
+
+                if(left > canvas_width - node_width) {
+                    left = canvas_width - node_width - 1;
+                }
+                if(left < 0 ) {
+                    left = 1;
+                }
+                if(top > canvas_height + canvas.offsetTop - node_height) {
+                    top = canvas_height + canvas.offsetTop - node_height - 10;
+                }
+                if(top < canvas.offsetTop) {
+                    top = canvas.offsetTop;
+                }
+                node.style.left = left + 'px';
+                node.style.top = top + 'px';
+                
+                node.style.opacity = 1;
+            }
+        }
+
+        // 设置可拖动的元素及画布
+        new Drag(canvas, node, canvas_centent);
+        function Folder(e) {
+            tab = document.getElementById('uploadImageBox_styleChoice');
+            if(tab.getAttribute('class') == 'uploadImageBox_styleChoice_hide') {
+                // 展开
+                tab.setAttribute('class', 'uploadImageBox_styleChoice_show');
+                document.getElementById('styleFolder').innerHTML = '取消展开';
+            }
+            else {
+                // 取消展开
+                tab.setAttribute('class', 'uploadImageBox_styleChoice_hide');
+                document.getElementById('styleFolder').innerHTML = '展开';
+            }
+        }
+        function like(e) {
+            icon = e.childNodes[1];
+            if(icon.getAttribute('class') == 'iconfont icon-shoucang') {
+                e.innerHTML = "已收藏<i class = 'iconfont icon-shoucang1'></i>";
+            }
+            else {
+                e.innerHTML = "收藏<i class = 'iconfont icon-shoucang'></i>";
+            }
+        }
+        function nolike(e) {
+            console.log(e.childNodes[0]);
+            if(e.childNodes[1].getAttribute('class') == 'iconfont icon-shoucang1') {
+                e.innerHTML = "取消收藏<i class = 'iconfont icon-shoucang1'></i>";
+            }
+        }
+        function nolike_after(e) {
+            console.log(e.childNodes[0]);
+            if(e.childNodes[1].getAttribute('class') == 'iconfont icon-shoucang1') {
+                e.innerHTML = "已收藏<i class = 'iconfont icon-shoucang1'></i>";
+            }
+        }
+        formObj = document.getElementsByTagName('form')[1];
+        function choiceCheck() {
+            options = document.getElementsByName('style');
+            num = 0;
+            for(var i = 1; i < options.length; i++) {
+                if(options[i].checked)
+                    num++;
+            }
+            if(num == 0) {
+                alert("请选择至少一种房间风格！");
+                return false;
+            }
+            else if(num > 3) {
+                alert("只能选择最多三种房间风格！");
+                return false;
+            }
+            return true;
+        }
+        formObj.onsubmit = function() {
+            return choiceCheck();
+        }
+        function showModels(e) {
+            p = e.parentNode;
+            divs = document.getElementsByClassName('modelMenu');
+            es = document.getElementsByClassName('iconfont icon-xiala');
+            for(var i = 0;i < es.length;i++) {
+                if(e != es[i]) {
+                    divs[i].setAttribute('style', 'display: none');
+                    es[i].attributes.state.value = 'fold';
+                    es[i].style.transform = "rotate(0deg)";
+                }
+            }
+            var index;
+            if(p.id == 'interiorFinish')
+                index = 0;
+            else if(p.id == 'furniture')
+                index = 1;
+            else
+                index = 2;
+            div = divs[index];
+            if(e.attributes.state.value == 'fold') {
+                div.setAttribute('style', 'display: flex');
+                e.attributes.state.value = 'unfold';
+                e.style.transform = "rotate(180deg)";
+            }
+            else {
+                div.setAttribute('style', 'display: none');
+                e.attributes.state.value = 'fold';
+                e.style.transform = "rotate(0deg)";
+            }
+        }
+    </script>
+{% endblock %}

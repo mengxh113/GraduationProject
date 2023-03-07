@@ -1,0 +1,128 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    height: 100%;
+}
+body {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+a {
+    text-decoration: none;
+}
+a:link, a:visited {
+    color: black;
+}
+a:hover, a:active {
+    color: blue;
+}
+#menu {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+#logo {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex: auto;
+    border-right: 1px solid;
+}
+#logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#logo>img {
+    width: 50px;
+    height: 50px;
+}
+#logo>img:hover, #logo-text:hover {
+    cursor: pointer;
+}
+header {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: auto;
+}
+header>h3 {
+    font-weight: normal;
+    /*font-family: STXingkai;*/
+}
+#info {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: auto;
+    border-left: 1px solid;
+}
+.headshot {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+}
+#username:hover {
+    cursor: pointer;
+}
+.otherOptions {
+    display: none;
+    z-index: 10;
+    position: absolute;
+    border-collapse: collapse;
+}
+.optionX {
+    display: flex;
+    cursor: pointer;
+    border: 1px solid black;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 40px;
+    background-color: white;
+    color: blue;
+    font-weight: 600;
+}
+.optionX:hover {
+    background-color: skyblue;
+}
+.optionX[name = 'exit'] {
+    color: white;
+    background-color: red;
+}
+.optionX[name = 'exit']:hover {
+    color: black;
+}
+.content {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    max-height: 633.6px;
+    overflow-y: hidden;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin: 0;
+}
+sub {
+    display: flex;
+    justify-content: center;
+    padding: 1px;
+    margin: auto 0 0 0;
+}
+.flash {
+    display: flex;
+    flex-direction: column;
+    width: 182.4px;
+    align-self: flex-end;
+    font-size: 12px;
+    font-weight: bolder;
+    color: red;
+}

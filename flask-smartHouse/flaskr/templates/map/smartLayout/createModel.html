@@ -1,0 +1,83 @@
+<!-- 新建模型 -->
+{% extends 'base.html' %}
+
+{% block title %}：新建模型{% endblock %}
+{% block header %}<h3>新建模型</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+	<link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/smartLayout/createModel.css') }}">
+	<link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'images/icon/iconfont/iconfont.css') }}"> 
+{% endblock %}
+
+{% block content %}
+    <form method = 'POST' action = "{{ url_for('map.smartLayout_createModel') }}">
+        <div id = 'createModel'>
+            <div id = 'modelInfo'>
+                <label for = 'modelName'>模型名称：</label>
+                <input id = 'modelName' name = 'modelName' value = '{{ name }}' required>
+                <label for = 'modelType'>模型类别：</label>
+                <select id = 'modelType' name = 'modelType' value = '{{ type }}' required>
+                    <optgroup id = 'interiorFinish' label = "硬装">
+                        <option class = 'interiorFinish' value = '门'>门</option>
+                        <option class = 'interiorFinish' value = '窗'>窗</option>
+                        <option class = 'interiorFinish' value = '地面'>地面</option>
+                    </optgroup>
+                    <optgroup id = 'furniture' label = '家具'>
+                        <option class = 'furniture' value = '沙发'>沙发</option>
+                        <option class = 'furniture' value = '床'>床</option>
+                        <option class = 'furniture' value = '桌子'>桌子</option>
+                        <option class = 'furniture' value = '椅子|凳子'>椅子|凳子</option>
+                        <option class = 'furniture' value = '柜架'>柜架</option>
+                    </optgroup>
+                    <optgroup id = 'kitchenAndBathroom' label = '厨卫'>
+                        <option class = 'kitchenAndBathroom' value = '橱柜'>橱柜</option>
+                        <option class = 'kitchenAndBathroom' value = '浴室柜'>浴室柜</option>
+                        <option class = 'kitchenAndBathroom' value = '洗手台'>洗手台</option>
+                        <option class = 'kitchenAndBathroom' value = '马桶'>马桶</option>
+                        <option class = 'kitchenAndBathroom' value = '浴缸'>浴缸</option>
+                    </optgroup>
+                </select>
+                <label for = 'modelMinGrow'>最小缩放比例：</label>
+                <input id = 'modelMinGrow' name = 'modelMinGrow' type = 'number' min = '0.5' max = '2.0' step = '0.01' value = '{{ min }}' required>
+                <label for = 'modelMaxGrow'>最大缩放比例：</label>
+                <input id = 'modelMaxGrow' name = 'modelMaxGrow' type = 'number' min = '0.5' max = '2.0' step = '0.01' value = '{{ max }}' required>
+                <label for = 'modelCode'>svg代码：</label>
+                <textarea id = 'modelCode' oninput = 'generateSVG(this)' name = 'modelCode' cols = '100%' rows = '20' style = 'resize: none;' required><g>{% if code == '' %}
+    <!-- 你的代码... -->
+    <!-- draggable类定义实际占地区域，actionZone类定义活动区域。 -->
+</g>{% else %}{{ code }}{% endif %}</textarea>
+            </div>
+            <div id = 'modelPreview'>
+                <label>模型预览图：</label>
+                <svg xmlns = 'http://www.w3.org/2000/svg' version = '1.1'></svg>
+            </div>
+        </div>
+        <input type = 'submit' value = '保存模型'>
+    </form>
+	<script>
+        var name, type, min, max, code;
+        function generateSVG(e) {
+            svg = document.getElementsByTagNameNS('http://www.w3.org/2000/svg', 'svg')[0];
+            svg.innerHTML = '';
+            svg.innerHTML = e.value;
+            name = document.getElementById('modelName').value;
+            type = document.getElementById('modelType').value;
+            min = document.getElementById('modelMinGrow').value;
+            max = document.getElementById('modelMaxGrow').value;
+            code = document.getElementById('modelCode').value;
+            // refreshPage();
+        }
+        function refreshPage() {
+            hrefstr = "{{ url_for('map.smartLayout_createModel', name = '-1', type = '-2', min = '-3', max = '-4', code = '-5') }}";
+            hrefstr = hrefstr.replace(/-1/, name);
+            hrefstr = hrefstr.replace(/-2/, type);
+            hrefstr = hrefstr.replace(/-3/, min);
+            hrefstr = hrefstr.replace(/-4/, max);
+            hrefstr = hrefstr.replace(/-5/, code);
+            hrefstr = hrefstr.replace(/amp;/g, '');
+            hrefstr = hrefstr.replace(/[\r\n]/g, '');
+            console.log(hrefstr);
+            window.location.href = hrefstr;
+        }
+    </script>
+{% endblock %}

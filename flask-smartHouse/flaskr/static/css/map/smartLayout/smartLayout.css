@@ -1,0 +1,317 @@
+@charset "UTF-8";
+.content {
+    flex-direction: column;
+}
+#smartLayout {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 95%;
+    height: 100%;
+    background: linear-gradient(white, rgb(225, 225, 225));
+}
+#searchBox {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 25%;
+    background-color: rgb(205, 227, 241);
+}
+#searchKey {
+    display: flex;
+}
+#searchKey>input {
+    text-indent: 6px;
+    padding: 2px;
+    display: flex;
+    width: 300px;
+}
+#searchKey>input[type = 'submit'] {
+    display: flex;
+    width: 50px;
+    text-align: center;
+    background-color: #5ed4f8;
+}
+#searchKey>input[type = 'submit']:hover {
+    background-color: #95e4fc;
+    cursor: pointer;
+}
+.searchClass {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+#func, #style, #width, #height, #demand {
+    display: flex;
+    justify-content: center;
+    width: 12.5%;
+    background-color: #e8e8ff;
+}
+#funcClass, #styleClass, #widthClass, #heightClass, #demandClass {
+    display: flex;
+    width: 87.5%;
+    flex-direction: row;
+}
+#funcClass>a {
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    align-items: space-evenly;
+}
+#styleClass>a {
+    display: flex;
+    justify-content: center;
+    width: 7.69%;
+    align-items: space-evenly;
+}
+#widthClass>a, #heightClass>a {
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    align-items: space-evenly;
+}
+#demandClass>a {
+    display: flex;
+    justify-content: center;
+    width: 25%;
+    align-items: space-evenly;
+}
+.unselected {
+    color: black;
+    background-color: rgb(169, 216, 245);
+}
+.unselected:hover {
+    color: black;
+    background-color: rgb(185, 222, 245);
+}
+.selected {
+    color: white;
+    background-color: rgb(117, 194, 241);
+}
+#templateBank {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    border-collapse: collapse;
+    width: 98%;
+    height: 75%;
+    max-height: 538.5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#templateBank::-webkit-scrollbar {
+    height: 10px;
+    width: 7px;
+    background: rgba(0, 0, 0, 0.1);
+}
+#templateBank::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
+}
+.templateBox {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-collapse: collapse;
+    justify-content: center;
+    box-shadow: darkgrey 1px 1px 1px 1px;
+    background-color: rgb(165, 216, 236);
+    margin: 3px;
+    width: 272.55px;
+    height: 214.28px;
+}
+.templateBox>a {
+    display: flex;
+    height: 30px;
+    width: 100px;
+    align-self: center;
+    font-size: 18px;
+}
+.templateBox>a:hover {
+    cursor: pointer;
+}
+.templateBox>.boxBody {
+    display: flex;
+    position: relative;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.templateBox>.boxBody>.boxBody_header {
+    display: flex;
+    height: 15%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.boxBody_title {
+    display: flex;
+    font-family: 'STXinwei';
+    font-size: 20px;
+    font-weight: bold;
+}
+#boxBody_close {
+    display: flex;
+    position: absolute;
+    margin-left: 122px;
+    margin-top: -1px;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    cursor: auto;
+}
+#boxBody_close:hover {
+    background-color: rgb(144, 194, 247);
+}
+.templateBox>.boxBody>img {
+    display: flex;
+    height: 70%;
+    width: 100%;
+}
+.boxBody_sub {
+    display: flex;
+    height: 15%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.boxBody_sub>.boxBody_style {
+    display: flex;
+    width: 65%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.boxBody_sub>.boxBody_like {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+}
+.boxBody_sub>.boxBody_like:hover {
+    cursor: pointer;
+    color: red;
+}
+.boxBody_sub>.boxBody_like>i:hover {
+    cursor: pointer;
+    background-color: rgb(147, 238, 254);
+}
+#modelBank {
+    display: flex;
+    width: 409px;
+    height: 300px;
+    position: absolute;
+    margin-left: -948px;
+}
+#modelBank_show {
+    display: flex;
+    width: 409px;
+    height: 300px;
+    position: absolute;
+}
+#modelBankMain {
+    height: 100%;
+    width: 384px;
+    background-color: #CDF7F7;
+}
+#modelTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 57.01px !important;
+    color: #CDF7F7;
+    background-color: #AAACB3;
+    font-weight: bold;
+}
+#modelMenu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #E30000;
+    background: linear-gradient(#AAACB3, #CDF7F7);
+}
+#modelMenu>select {
+    padding-bottom: 2px;
+}
+#modelImages {
+    display: flex;
+    margin-top: 10px;
+    padding: 5px;
+    flex-wrap: wrap;
+    max-height: 500px;
+    overflow-y: auto;
+}
+#modelBankNav {
+    display: flex;
+    width: 25px;
+    height: 100%;
+    align-items: center;
+}
+#sideNav {
+    display: flex;
+    flex-direction: column;
+    background-color: #AAACB3;
+    width: 100%;
+    height: 82px;
+}
+#sideNav:hover {
+    cursor: pointer;
+}
+#sideNav>i {
+    transform: rotate(-90deg);
+    color: #CDF7F7;
+    width: 18px;
+    height: 18px;
+}
+#sideNav>i::before {
+    display: flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+}
+#sideNav>label {
+    color: #CDF7F7;
+    writing-mode: vertical-lr;
+    width: 25px;
+    height: 70px;
+}
+#sideNav>label:hover {
+    cursor: pointer;
+}
+#smartSearch {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+.smartBox {
+    padding: 5px;
+}
+#searchButton {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+#searchButton>input {
+    margin-right: 30px;
+    width: 80px;
+    height: 30px;
+}
+.flash {
+    position: absolute;
+    color: red;
+    font-size: 15px;
+    margin-top: -300px;
+    margin-left: -1000px;
+}

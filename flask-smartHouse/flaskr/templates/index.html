@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %}：主页{% endblock %}
+
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/index.css') }}">
+{% endblock %}
+
+{% block header %}
+    <h3>智能家居，造温馨之家！</h3>
+{% endblock %}
+
+{% block content %}
+    <div id = 'styleShow'>
+        <div id = "BJ">
+            <img ondblclick = "toStyleShow();" title = "美式风格" src = "../static/images/buildStyle/Americano/1.jpg" id = "img">
+        </div>
+        <ul id = "ol"> 
+            <!--设置图片为一行 ；设置图片间隔 -->
+            <li><img title = "美式风格" onclick = "setImg(1);" src = "../static/images/buildStyle/point.png" id = "clk1"></li>
+            <li><img title = "田园式风格" onclick = "setImg(2);" src = "../static/images/buildStyle/point.png" id = "clk2"></li>
+            <li><img title = "欧式风格" onclick = "setImg(3);" src = "../static/images/buildStyle/point.png" id = "clk3"></li>
+            <li><img title = "港式风格" onclick = "setImg(4);" src = "../static/images/buildStyle/point.png" id = "clk4"></li>
+            <li><img title = "简欧风格" onclick = "setImg(5);" src = "../static/images/buildStyle/point.png" id = "clk5"></li>
+            <li><img title = "日式风格" onclick = "setImg(6);" src = "../static/images/buildStyle/point.png" id = "clk6"></li>
+            <li><img title = "地中海式风格" onclick = "setImg(7);" src = "../static/images/buildStyle/point.png" id = "clk7"></li>
+            <li><img title = "轻奢风格" onclick = "setImg(8);" src = "../static/images/buildStyle/point.png" id = "clk8"></li>
+            <li><img title = "现代风格" onclick = "setImg(9);" src = "../static/images/buildStyle/point.png" id = "clk9"></li>
+            <li><img title = "新中式风格" onclick = "setImg(10);" src = "../static/images/buildStyle/point.png" id = "clk10"></li>
+            <li><img title = "北欧风格" onclick = "setImg(11);" src = "../static/images/buildStyle/point.png" id = "clk11"></li>
+            <li><img title = "后现代风格" onclick = "setImg(12);" src = "../static/images/buildStyle/point.png" id = "clk12"></li>
+        </ol>
+    </div>
+    <div class = 'function'>
+        {% block function %}
+            <div id = 'article'>
+                <form id = 'searchBox' method = 'POST'>
+                    <a href = "{{ url_for('map.article', filter = '全部', key = '', selected = '全部') }}">进入主页面</a>
+                    <input id = 'key' name = 'key' value = '{{ key }}' placeholder = "请输入关键词进行检索...">&nbsp;
+				    <input type = 'submit' value = '搜索'>
+                </form>
+                <div id = articleBank>
+                    {% if articles|length == 0 %}
+                        <div class = 'boxBody'>
+                            <i>暂无文章信息</i>
+                        </div>
+                    {% else %}
+                        {% for article in articles %}
+                            <div class = 'boxBody'>
+                                <div class = 'boxBody_header'>
+                                    <a title = '详情' class = 'boxBody_title' href = "{{ url_for('map.articleShow', id = article['id']) }}">{{ article['title'] if article['title']|length <= 10 else article['title'][:10] + '...' }}</a>
+                                    <div class = 'boxBody_author'><i class = "iconfont icon-zuozhe"></i>&nbsp;{{ article['username'] if article['username']|length <= 5 else article['username'][:5] + '...' }}</div>
+                                </div>
+                                <div class = 'boxBody_info'>
+                                    <div class = 'boxBody_theme'></i>{{ article['theme'] }}</div>
+                                    <div class = 'boxBody_time'>{{ article['creation_time'].strftime('%Y/%m/%d') }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+    <script>
+        function toStyleShow() {  
+            if (confirm("将要跳转进入装修风格展示页面，您确定要进入吗？")) {  
+                window.location.href = "{{ url_for('map.styleDisplay', filter = '全部', key = '', type = '全部', area = '全部', style = '全部', func = '全部') }}";
+            }
+        }  
+        var index = 0;
+        var imgs = ["../static/images/buildStyle/Americano/1.jpg",
+                    "../static/images/buildStyle/Arcadian/2.jpg",
+                    "../static/images/buildStyle/European/3.jpg",
+                    "../static/images/buildStyle/HongKong/4.jpg",
+                    "../static/images/buildStyle/JaneEuropean/5.jpg",
+                    "../static/images/buildStyle/Japanese/6.jpg",
+                    "../static/images/buildStyle/Mediterranean/7.jpg",
+                    "../static/images/buildStyle/MildLuxury/8.jpg",
+                    "../static/images/buildStyle/Modern/9.jpg",
+                    "../static/images/buildStyle/NeoChinese/10.jpg",
+                    "../static/images/buildStyle/NorthernEuropean/11.jpg",
+                    "../static/images/buildStyle/Postmodern/12.jpg"
+                ]; /*图片的地址 */
+        var styles = ["美式风格",
+                      "田园式风格",
+                      "欧式风格",
+                      "港式风格",
+                      "简欧风格",
+                      "日式风格",
+                      "地中海式风格",
+                      "轻奢风格",
+                      "现代风格",
+                      "新中式风格",
+                      "北欧风格",
+                      "后现代风格"
+                ]; /*图片的风格 */
+        function handoff() {
+            id = 'clk' + (index + 1);
+            document.getElementById(id).style = "filter: brightness(100%);";
+            index++;
+            if(index > 11) {
+                index = 0;    //当为11的时候重置为0
+            }
+            document.getElementById("img").src = imgs[index];
+            document.getElementById("img").title = styles[index];
+            id = 'clk' + (index + 1);
+            document.getElementById(id).style = "filter: brightness(40%);";
+        }
+        var interval = setInterval("handoff()", 2000);  //每2秒重新运行函数handoff()
+        function setImg(i) {
+            clearInterval(interval);
+            if(index > 11) {
+                index = 0;
+            }
+            id = 'clk' + (index + 1);
+            document.getElementById(id).style = "filter: brightness(100%);";
+            index = i - 1;
+            document.getElementById("img").src = imgs[index];
+            document.getElementById("img").title = styles[index];
+            id = 'clk' + (index + 1);
+            document.getElementById(id).style = "filter: brightness(40%);";
+            pause = setTimeout("beginInterval()", 3000);  //选中浏览时暂停5秒
+        }
+        function beginInterval() {
+            interval = setInterval("handoff()", 2000);
+        }
+
+        window.onload = function() {
+            id = 'clk' + (index + 1);
+            document.getElementById(id).style = "filter: brightness(40%);";
+
+			themeLabs = document.getElementsByClassName('boxBody_info');
+			for(var i = 0; i < themeLabs.length; i++) {
+				switch(themeLabs[i].childNodes[1].innerHTML) {
+					case '法律法规': 
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme1');
+						break;
+					case '装修风格': 
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme2');
+						break;
+					case '家具建材':  
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme3');
+						break;
+					case '价格估算':  
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme4');
+						break;
+					case '经验分享':  
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme5');
+						break;
+					case '健康家居':  
+						themeLabs[i].childNodes[1].setAttribute("class", 'boxBody_theme_theme6');
+						break;
+				}
+			}
+		}
+        formObj = document.getElementsByTagName('form')[0];
+        function finalCheck(typebtn) {
+            tips = document.getElementById('tips');
+            btn = document.getElementsByName('button')[0].childNodes[1];
+            for(var i = 0; i < checkPara.length; i++) {
+                if(checkVal[i] == 1) {
+                    tips.innerHTML = errorText[i];
+                    return false;
+                }
+            }
+            return true;
+        }
+        formObj.onsubmit = function() {
+            para = formObj.name;
+            return finalCheck(para);
+        }
+    </script>
+{% endblock %}

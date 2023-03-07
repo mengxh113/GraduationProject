@@ -1,0 +1,146 @@
+@charset "UTF-8";
+#tab {
+    display: flex;
+    width: 60%;
+    max-height: 633.6px;
+    justify-content: space-evenly;
+    align-items: center;
+    background: linear-gradient(white, rgb(225, 225, 225));
+    text-align: center;
+}
+#userManagement {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 75%;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    text-align: center;
+}
+thead {
+    order: 1;
+    border-collapse: collapse;
+    margin-bottom: -2px;
+    z-index: 2;
+}
+tbody {
+    order: 2;
+    max-height: 100%;
+    overflow: auto;
+    z-index: 1;
+}
+tbody::-webkit-scrollbar {
+    display: none;
+}
+th, tr, td {
+    border: 2px solid black;
+}
+th {
+    background-color: rgb(100, 100, 100);
+    color: whitesmoke;
+}
+.searchBody {
+    display: none;
+    position: absolute;
+    border-collapse: collapse;
+}
+.searchBody>span {
+    display: flex;
+}
+.searchBody>span>div {
+    z-index: 1;
+    width: 30px;
+}
+.searchBox {
+    margin-top: -48px;
+    padding: 1px;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 3px;
+    align-items: center;
+    justify-content: space-between;
+    width: 230px;
+    height: 20px !important;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+}
+.searchBox>input {
+    text-indent: 4px;
+    margin-bottom: -2px;
+    font-weight: 600;
+}
+.searchBox>input:focus {
+    outline: none;
+}
+.searchBox>a {
+    cursor: pointer;
+}
+#search_age {
+    width: 180px;
+}
+#search_age>input {
+    text-align: center;
+    text-indent: 0px;
+    width: 30px;
+}
+#search_sex {
+    text-align: center;
+    width: 95px;
+}
+#search_sex>select {
+    text-align: center;
+    text-align-last: center;
+    margin-bottom: 4px;
+    width: 50px;
+    font-weight: 600;
+}
+#search_sex>select:focus {
+    outline: none;
+}
+#search_sex>select>option {
+    width: 50px;
+    text-align: center;
+}
+.rightTri {
+    display: inline-block;
+    cursor: pointer;
+    z-index: 2;
+    width: 0;
+    height: 0;
+    border-left: 10px solid white;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+}
+.topTri {
+    display: inline-block;
+    cursor: pointer;
+    z-index: 2;
+    width: 0;
+    height: 0;
+    border-bottom: 10px solid rgb(30, 30, 30);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+}
+.row0 {
+    width: 40px;
+}
+.row1 {
+    width: 160px;
+}
+.row2, .row4 {
+    width: 165px;
+}
+.row3 {
+    width: 110px;
+}
+.row5, .row6, .row7 {
+    width: 60px;
+}
+.a {
+    background-color: white;
+}
+.b {
+    background-color: rgb(230, 230, 230);
+}

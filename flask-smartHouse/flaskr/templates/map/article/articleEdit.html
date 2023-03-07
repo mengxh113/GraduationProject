@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}：新建文章{% endblock %}
+{% block header %}<h3>新建文章</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/map/article/articleCreate.css') }}">
+    <!-- editormd CSS文件 -->
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'editormd/css/editormd.css') }}">
+    <!-- editormd JS相关文件 -->
+    <script src = "https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src = "{{ url_for('static', filename = 'editormd/editormd.min.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <form name = 'mdEditorForm' action = "{{ url_for('map.edit', id = article['id']) }}" method = "post">
+        <div id = 'article-header'>
+            <label for = 'title'>标题：</label>
+            <input id = 'article-title' type = 'text' name = 'title' value = "{{ article['title'] }}">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <label for = 'theme'>主题：</label>
+            <select id = 'article-theme' name = 'theme'>
+                <option value = "法律法规" {% if article['theme'] == '法律法规' %}selected{% endif %}>法律法规</option>
+                <option value = "装修风格" {% if article['theme'] == '装修风格' %}selected{% endif %}>装修风格</option>
+                <option value = "家具建材" {% if article['theme'] == '家具建材' %}selected{% endif %}>家具建材</option>
+                <option value = "价格估算" {% if article['theme'] == '价格估算' %}selected{% endif %}>价格估算</option>
+                <option value = "经验分享" {% if article['theme'] == '经验分享' %}selected{% endif %}>经验分享</option>
+                <option value = "健康家居" {% if article['theme'] == '健康家居' %}selected{% endif %}>健康家居</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button id = 'confirmButton'>保存修改</button>
+        </div>
+        <!-- 文章的主体内容 textarea -->
+        <div id = 'article-content'>
+            <textarea name = 'content' id = 'content'>{{ article['content'] }}</textarea>
+        </div>
+    </form>
+    <script type="text/javascript">
+        var testEditor;
+        $(function () {
+            testEditor = editormd("article-content", {
+                width: "100%",
+                height: 575,
+                syncScrolling: "single",
+                path: "{{ url_for('static', filename = 'editormd/lib/') }}",
+                emoji: true, //是否开启表情功能
+                saveHTMLToTextarea: true,
+                imageUpload: true, //是否开启图片上传功能
+                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"], //允许上传的图片格式
+                imageUploadURL: "{{ url_for('map.upload') }}", //指定图片要上传到哪个视图函数
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% block title %}：用户管理{% endblock %}
+{% block header %}<h3 onclick = "queryAll()" onmouseover = "style = 'cursor: pointer;'">用户管理</h3>{% endblock %}
+{% block stylesheet %}
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/base.css') }}">
+    <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/infoManagement/userManagement.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id = 'tab'>
+    <table id = 'userManagement'>
+        <thead>
+            <th class = "row0">序号</th>
+            <th class = "row1">编号</th>
+            <th class = "row2">
+                <span style = "display: flex; justify-content: center; align-items: center;">用户名&nbsp;<div id = 'username' name = 'key' class = "rightTri" onclick = "revolve(this)"></div></span>
+                <span class = "searchBody">
+                    <span>
+                        <div></div>
+                        <span id = 'search_username' class = "searchBox">
+                            <input style = "border: none;" placeholder = "请输入用户名进行查询">
+                            <a onclick = "queryWith(this, 'username')" style = "display: flex; color: black; font-size: 14px;">|&nbsp;查询&nbsp;</a>
+                        </span>
+                    </span>
+                </span>
+            </th>
+            <th class = "row3">手机号</th>
+            <th class = "row4">邮箱</th>
+            <th class = "row5">
+                <span style = "display: flex; justify-content: center; align-items: center;">年龄&nbsp;<div id = 'age' name = 'key' class = "rightTri" onclick = "revolve(this)"></div></span>
+                <span class = "searchBody">
+                    <span>
+                        <div></div>
+                        <span id = 'search_age' class = "searchBox">
+                            &nbsp;从<input id = 'from' style = "border: none;" onchange = "search_age(this, 'from')">岁到<input id = 'to' style = "border: none;" onchange = "search_age(this, 'to')">岁&nbsp;
+                            <a onclick = "queryWith(this, 'age')" style = "display: flex; color: black; font-size: 14px;">|&nbsp;查询&nbsp;</a>
+                        </span>
+                    </span>
+                </span>
+            </th>
+            <th class = "row6">
+                <span style = "display: flex; justify-content: center; align-items: center;">性别&nbsp;<div id = 'sex' name = 'key' class = "rightTri" onclick = "revolve(this)"></div></span>
+                <span class = "searchBody">
+                    <span>
+                        <div></div>
+                        <span id = 'search_sex' class = "searchBox">
+                            <select style = "border: none;">
+                                <option value = "" selected></option>
+                                <option value = "男">男</option>
+                                <option value = "女">女</option>
+                                <option value= "私密">私密</option>
+                            </select>
+                            <a onclick = "queryWith(this, 'sex')" style = "display: flex; color: black; font-size: 14px;">|&nbsp;查询&nbsp;</a>
+                        </span>
+                    </span>
+                </span>
+            </th>
+            <th class = "row7">操作</th>
+        </thead>
+        {% if not users %}
+            <tr>
+                <td class = "row0">1<td>
+                <td class = "row1">-</td>
+                <td class = "row2">-</td>
+                <td class = "row3">-</td>
+                <td class = "row4">-</td>
+                <td class = "row5">-</td>
+                <td class = "row6">-</td>
+                <td class = "row7"><a href = "#">删除</a></td>
+            </tr>
+        {% endif %}
+        {% for user in users %}
+            <tr name = 'record'>
+                <td class = 'row0'></td>
+                <td class = "row1">{{ user['id'] }}</td>
+                <td class = "row2">{{ user['username'] }}</td>
+                <td class = "row3">{{ user['phone'] }}</td>
+                <td class = "row4">{{ user['email'] }}</td>
+                <td class = "row5">{{ user['age'] }}</td>
+                <td class = "row6">{{ user['sex'] }}</td>
+                <td class = "row7"><a href = "{{ url_for('infoManagement.deleteUser', id = user['id']) }}">删除</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+    <script>
+        window.onload = function() {
+            trs = document.getElementsByName('record');
+            for(var i = 0; i < trs.length; i++) {
+                trs[i].childNodes[1].innerHTML = i + 1;
+            }
+            table = document.getElementById('userManagement');
+            tr0 = table.childNodes[3].childNodes[0];
+            for(var i = 0, tr = tr0; tr != null; tr = tr.nextSibling.nextSibling, i++) {
+                if(i % 2 == 0) {
+                    tr.setAttribute("class", 'a');
+                }
+                else {
+                    tr.setAttribute("class", 'b');
+                }
+            }
+        }
+        function queryAll() {
+            window.location.href = href = "{{ url_for('infoManagement.userManagement') }}";
+        }
+        const keys = document.getElementsByName('key');
+        function clearKeys(e) {
+            switch(e.getAttribute('id')) {
+                case 'username': 
+                    document.getElementById('search_username').childNodes[1].value = '';
+                    break;
+                case 'age': 
+                    document.getElementById('search_age').childNodes[1].value = '';
+                    document.getElementById('search_age').childNodes[3].value = '';
+                    break;
+                case 'sex': 
+                    document.getElementById('search_sex').childNodes[1].value = '';
+                    break;
+                default: break;
+            }
+        }
+        function modeChange(e) {
+            if(e.getAttribute('class') == 'topTri') {
+                e.setAttribute("class", 'rightTri');
+                e.parentNode.parentNode.childNodes[3].setAttribute("style", "display: none");
+            }
+        }
+        function revolve(e) {
+            for(var i = 0; i < 3; i++) {
+                if(keys[i] != e) {
+                    modeChange(keys[i]);
+                    clearKeys(keys[i]);
+                }
+                else {
+                    box = document.getElementsByTagName('html')[0];
+                    if(e.getAttribute('class') == 'rightTri') {
+                        e.setAttribute("class", 'topTri');
+                        e.parentNode.parentNode.childNodes[3].setAttribute("style", "display: flex; flex-direction: column");
+                        inner = e.parentNode.parentNode.childNodes[3].childNodes[1].childNodes[3];
+                        box.addEventListener('mousedown', event => {
+                            if(event.target.contains(inner) && event.target !== inner) {
+                                clearKeys(e);
+                                e.setAttribute("class", 'rightTri');
+                                e.parentNode.parentNode.childNodes[3].setAttribute("style", "display: none;");
+                            }
+                        })
+                    }
+                    else {
+                        clearKeys(e);
+                        e.setAttribute("class", 'rightTri');
+                        e.parentNode.parentNode.childNodes[3].setAttribute("style", "display: none;");
+                    }
+                }
+            }
+        }
+        function search_age(e, x) {
+            if(!(/^[0-9]*$/.test(e.value))) {
+                e.value = '';
+                return;
+            }
+            e.value = e.value.replace(/^[0]+/, '');
+            if(e.value == '')
+                e.value = 0;
+            if(e.value < 0) {
+                e.value = 0;
+            }
+            if(e.value > 120) {
+                e.value = 120;
+            }
+            if(x == 'from') {
+                to = document.getElementById('to');
+                if(to.value != '' & e.value > to.value) {
+                    e.value = to.value;
+                }
+            }
+            else if(x == 'to') {
+                from = document.getElementById('from');
+                if(from.value != '' & e.value < from.value) {
+                    e.value = from.value;
+                }
+            }
+        }
+        function queryWith(e, para) {
+            paras = [];
+            switch(para) {
+                case 'username': 
+                    paras.push(e.parentNode.childNodes[1].value);
+                    break;
+                case 'age': 
+                    paras.push(e.parentNode.childNodes[1].value);
+                    paras.push(e.parentNode.childNodes[3].value);
+                    break;
+                case 'sex': 
+                    paras.push(e.parentNode.childNodes[1].value);
+                    break;
+                default: break;
+            }
+            href = "{{ url_for('infoManagement.queryUsers', type = '-11111', paras = '-22222') }}";
+            href = href.replace(/-11111/, para);
+            if(!paras[1])
+                href = href.replace(/-22222/, paras[0]);
+            else
+                href = href.replace(/-22222/, paras[0] + '-' + paras[1]);
+            href = href.replace(/amp;/, '');
+            window.location.href = href;
+        }
+    </script>
+{% endblock %}
