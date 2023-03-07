@@ -14,4 +14,4 @@ $env:FLASK_ENV='development'
  * Debugger PIN: 423-096-938
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 以运行本系统。
-3. 打开网站http://127.0.0.1:5000/auth/index以访问本系统主页。
+3. 打开网站 http://127.0.0.1:5000/auth/index 以访问本系统主页。
